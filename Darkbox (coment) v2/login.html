@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>DARKBOX — Iniciar Sesión</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Inicia sesión en DARKBOX para acceder a tu biblioteca de juegos.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login-c.css">
+</head>
+<body>
+
+    <header>
+        <div class="contenedor">
+            <a href="home.html" class="logo">DARKBOX</a>
+            <div class="buscador">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" placeholder="Buscar juegos...">
+            </div>
+            <button class="btn-iniciar">Iniciar Sesión</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="tarjeta-login">
+
+            <!-- ── PESTAÑAS: Login / Registro ────────────────────────── -->
+            <div class="login-tabs">
+                <button class="tab-btn tab-activo" id="tab-login" onclick="mostrarTab('login')">
+                    Iniciar Sesión
+                </button>
+                <button class="tab-btn" id="tab-registro" onclick="mostrarTab('registro')">
+                    Registrarse
+                </button>
+            </div>
+
+
+            <!-- ════════════════════════════════════════════════════
+                 FORMULARIO DE LOGIN
+                 ════════════════════════════════════════════════════ -->
+            <div id="panel-login">
+                <div class="login-header">
+                    <h1 class="logo-grande">DARKBOX</h1>
+                    <p class="subtitulo">Inicia sesión para continuar</p>
+                </div>
+
+                <div class="form-login">
+
+                    <div class="campo">
+                        <label for="login-email">Email</label>
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <input type="email" id="login-email" placeholder="tu@email.com" autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="login-password">Contraseña</label>
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+                        </div>
+                    </div>
+
+                    <!-- Mensaje de error/éxito -->
+                    <p class="error-msg" id="login-error"></p>
+
+                    <button class="btn-submit" id="btn-login" onclick="hacerLogin()">
+                        Iniciar Sesión
+                    </button>
+
+                </div>
+            </div>
+
+
+            <!-- ════════════════════════════════════════════════════
+                 FORMULARIO DE REGISTRO
+                 ════════════════════════════════════════════════════ -->
+            <div id="panel-registro" style="display:none;">
+                <div class="login-header">
+                    <h1 class="logo-grande">DARKBOX</h1>
+                    <p class="subtitulo">Crea tu cuenta gratis</p>
+                </div>
+
+                <div class="form-login">
+
+                    <div class="campo">
+                        <label for="reg-nombre">Nombre</label>
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            <input type="text" id="reg-nombre" placeholder="Tu nombre" autocomplete="name">
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="reg-email">Email</label>
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <input type="email" id="reg-email" placeholder="tu@email.com" autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="reg-password">Contraseña</label>
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+                        </div>
+                    </div>
+
+                    <!-- Mensaje de error/éxito del registro -->
+                    <p class="error-msg" id="reg-error"></p>
+                    <p class="exito-msg" id="reg-exito" style="display:none;"></p>
+
+                    <button class="btn-submit" id="btn-registro" onclick="hacerRegistro()">
+                        Crear Cuenta
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+
+    <!-- ════════════════════════════════════════════════════════════
+         SCRIPTS — supabase.js PRIMERO, siempre
+         ════════════════════════════════════════════════════════════ -->
+    <script src="supabase.js"></script>
+    <script>
+
+    /* ── PESTAÑAS ────────────────────────────────────────────────── */
+    function mostrarTab(cual) {
+        document.getElementById('panel-login').style.display    = cual === 'login'    ? 'block' : 'none';
+        document.getElementById('panel-registro').style.display = cual === 'registro' ? 'block' : 'none';
+        document.getElementById('tab-login').classList.toggle('tab-activo',    cual === 'login');
+        document.getElementById('tab-registro').classList.toggle('tab-activo', cual === 'registro');
+    }
+
+
+    /* ══════════════════════════════════════════════════════════════
+       LOGIN CON SUPABASE
+       ══════════════════════════════════════════════════════════════ */
+    async function hacerLogin() {
+        var email    = document.getElementById('login-email').value.trim();
+        var password = document.getElementById('login-password').value;
+        var errorEl  = document.getElementById('login-error');
+        var btn      = document.getElementById('btn-login');
+
+        /* Validación básica */
+        if (!email || !password) {
+            mostrarError(errorEl, 'Por favor completa todos los campos.');
+            return;
+        }
+
+        /* Deshabilitar botón mientras carga */
+        btn.disabled = true;
+        btn.textContent = 'Iniciando sesión...';
+
+        /* Llamar a Supabase */
+        var resultado = await db.auth.login(email, password);
+
+        if (resultado.ok) {
+            /* Login exitoso: redirigir al home con sesión */
+            window.location.href = 'home-sesion.html';
+        } else {
+            /* Mostrar error */
+            var mensaje = traducirError(resultado.error);
+            mostrarError(errorEl, mensaje);
+            btn.disabled = false;
+            btn.textContent = 'Iniciar Sesión';
+        }
+    }
+
+
+    /* ══════════════════════════════════════════════════════════════
+       REGISTRO CON SUPABASE
+       ══════════════════════════════════════════════════════════════ */
+    async function hacerRegistro() {
+        var nombre   = document.getElementById('reg-nombre').value.trim();
+        var email    = document.getElementById('reg-email').value.trim();
+        var password = document.getElementById('reg-password').value;
+        var errorEl  = document.getElementById('reg-error');
+        var exitoEl  = document.getElementById('reg-exito');
+        var btn      = document.getElementById('btn-registro');
+
+        /* Validaciones */
+        if (!nombre || !email || !password) {
+            mostrarError(errorEl, 'Por favor completa todos los campos.');
+            return;
+        }
+        if (password.length < 6) {
+            mostrarError(errorEl, 'La contraseña debe tener al menos 6 caracteres.');
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Creando cuenta...';
+
+        var resultado = await db.auth.registrar(email, password, nombre);
+
+        if (resultado.ok) {
+            /* Registro exitoso */
+            errorEl.style.display = 'none';
+            exitoEl.style.display = 'block';
+            exitoEl.textContent   = '¡Cuenta creada exitosamente! Ya puedes iniciar sesión.';
+            btn.disabled = false;
+            btn.textContent = 'Crear Cuenta';
+        } else {
+            var mensaje = traducirError(resultado.error);
+            mostrarError(errorEl, mensaje);
+            btn.disabled = false;
+            btn.textContent = 'Crear Cuenta';
+        }
+    }
+
+
+    /* ── HELPERS ─────────────────────────────────────────────────── */
+
+    /* Muestra el mensaje de error con estilo visible */
+    function mostrarError(elemento, mensaje) {
+        elemento.style.display = 'block';
+        elemento.textContent   = mensaje;
+        elemento.classList.add('visible');
+    }
+
+    /* Traduce los mensajes de error de Supabase (que vienen en inglés)
+       a mensajes en español para el usuario */
+    function traducirError(errorEn) {
+        var errores = {
+            'Invalid login credentials':            'Email o contraseña incorrectos.',
+            'Email not confirmed':                  'Debes verificar tu email antes de iniciar sesión.',
+            'User already registered':              'Ya existe una cuenta con ese email.',
+            'Password should be at least 6 characters': 'La contraseña debe tener al menos 6 caracteres.',
+            'Unable to validate email address':     'El formato del email no es válido.',
+            'signup_disabled':                      'El registro está temporalmente deshabilitado.'
+        };
+        /* Buscar si el mensaje contiene alguna de las claves conocidas */
+        for (var clave in errores) {
+            if (errorEn && errorEn.includes(clave)) {
+                return errores[clave];
+            }
+        }
+        /* Si no se reconoce, mostrar un mensaje genérico */
+        return 'Ocurrió un error. Por favor intenta de nuevo.';
+    }
+
+
+    /* ── VERIFICAR SI YA HAY SESIÓN ──────────────────────────────── */
+    /* Si el usuario ya inició sesión y vuelve al login, lo redirigimos */
+    document.addEventListener('db-listo', async function () {
+        var haySesion = await db.auth.haySesion();
+        if (haySesion) {
+            window.location.href = 'home-sesion.html';
+        }
+    });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <!-- HEAD -->
+
+    <title>DARKBOX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts:
+         - Inter weight 400 (texto normal) y 900 (negrita máxima / "Black")
+         - Rajdhani weight 500 y 600 (para botones y textos secundarios) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    
+    
+
+    <header class="header-sin-sesion">
+
+        <div class="contenedor">
+        <!-- .contenedor molde de 12 columnas-->
+
+            <!-- Logo: es un enlace <a> que lleva al inicio.
+                 El degradado de color se aplica en CSS con background-clip. -->
+            <a href="#" class="logo">DARKBOX</a>
+
+            <!-- Buscador -->
+            <div class="buscador">
+
+                <!-- SVG de la lupa dibujado directamente en HTML.
+                     viewBox define el área de dibujo.
+                     stroke="currentColor" hace que herede el color del CSS.
+                     circle dibuja el círculo de la lupa.
+                     line dibuja el palito de la lupa. -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+
+                
+                <input type="text" placeholder="Buscar juegos...">
+            </div>
+
+            <!-- Botón Iniciar Sesión -->
+            <a href="login.html" class="btn-iniciar-sesion">Iniciar Sesión</a>
+
+        </div>
+    </header>
+    
+    <main>
+
+    <!-- ══════════════════════════════════════════════
+         SECCION HERO (banner de bienvenida)
+         ══════════════════════════════════════════════ -->
+    <section class="hero">
+
+        <div class="contenedor">
+            
+            <h1>Bienvenido a
+                
+                <span>DARKBOX</span>
+            </h1>
+
+            <p>Descubre miles de juegos digitales. Las mejores ofertas y lanzamientos exclusivos.</p>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         SECCIÓN JUEGOS DEL MOMENTO
+         ══════════════════════════════════════════════ -->
+
+    <!-- Radios del carrusel de juegos: colocados JUSTO ANTES de su sección.
+         Esto es clave: el selector CSS ~ solo funciona entre hermanos directos
+         en el mismo nivel del HTML. Si los radios estuvieran en otro lugar,
+         el selector no podría encontrar la sección y las flechas no funcionarían.
+         name="carrusel" agrupa los dos radios: solo uno puede estar marcado a la vez.
+         checked en slide-1 hace que la primera página sea visible al cargar la web. -->
+    <input type="radio" name="carrusel" id="slide-1" checked>
+    <input type="radio" name="carrusel" id="slide-2">
+
+    <section class="juegos-momento">
+        <div class="contenedor">
+
+            <div class="seccion-header">
+                
+                <h2>🔥 Juegos del Momento</h2>
+
+                <div class="flechas">
+                    <!-- Las flechas son LABELS, no botones.
+                         Cada label tiene un "for" que apunta al id de un radio.
+                         Al hacer clic en el label, el radio correspondiente se marca,
+                         y el CSS detecta ese cambio para mostrar el grupo correcto.
+
+                         Hay 4 labels en total: 2 izquierda + 2 derecha.
+                         El CSS muestra solo los 2 correctos según qué slide esté activo,
+                         usando el selector: #slide-X:checked ~ section .clase-flecha
+
+                         Lógica del loop:
+                         - En slide-1: izquierda va a slide-2 (loop hacia el final),
+                                       derecha avanza a slide-2
+                         - En slide-2: izquierda retrocede a slide-1,
+                                       derecha va a slide-1 (loop hacia el inicio) -->
+
+                    <!-- Flechas izquierda (‹) -->
+                    <label for="slide-2" class="flecha izq-desde-1">&#8249;</label>
+                    <label for="slide-1" class="flecha izq-desde-2">&#8249;</label>
+
+                    <!-- Flechas derecha (›) -->
+                    <label for="slide-2" class="flecha der-desde-1">&#8250;</label>
+                    <label for="slide-1" class="flecha der-desde-2">&#8250;</label>
+                </div>
+            </div>
+
+            <!-- ════ GRUPO 1: página 1 (tarjetas 1 a 4) ════
+                 Visible por defecto. El CSS lo oculta cuando slide-2 está activo
+                 class="grupo" aplica el grid de 4 columnas
+                 class="grupo-1" es el identificador específico para los selectores CSS -->
+            <div class="grupo grupo-1">
+
+                <!-- ── TARJETA 1 ─────────────────────────────────
+                     ARTICLE 
+                     IMAGEN: para cambiar por imagen real, reemplaza el src del <img>
+                
+                     INFO:   para cambiar los datos del juego:
+                             - .nombre → nombre del juego
+                             - .puntuacion → número de estrella
+                             - .genero → categoría del juego
+                             - .descripcion → texto descriptivo
+                             - .precio → precio en pesos colombianos
+                     ─────────────────────────────────────────────── -->
+                <a href="juego-nsesion/juego-helldrivers2.html" class="tarjeta-link">
+                <article class="tarjeta">
+                
+                    <div class="imagen">
+                        <!-- La transición de zoom se activa con .tarjeta:hover .imagen img -->
+                        <img src="https://a.storyblok.com/f/178900/768x432/1c7b91c44a/helldivers-2.jpg/m/filters:quality(95)format(webp)" alt="Cyber Nexus 2077">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">HELLDIVERS™ 2</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.5</span>
+                            <span class="separador">•</span>
+                            <span class="genero">JcE/Acción/Cooperativo en lìnea</span>
+                        </div>
+                        <p class="descripcion">La última línea de ataque de la galaxia. Alístate en los Helldivers y únete a la lucha por la libertad en una galaxia hostil en un juego de disparos en tercera persona rápido, frenético y feroz.</p>
+                        <div class="pie">
+                            <span class="precio">$149.000</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 2 ── -->
+                <a href="juego-nsesion/juego-resident-evil-3.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://imagenes.hobbyconsolas.com/files/image_640_360/uploads/imagenes/2023/04/25/690227fe3b5ba.jpeg" alt="Dark Souls: Eternal">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Resident Evil 3</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.0</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Acción/Aventura/Zombie</span>
+                        </div>
+                        <p class="descripcion">Jill Valentine es una de las pocas personas que quedan en Raccoon City que han sido testigos de las atrocidades de Umbrella. Para detenerla, Umbrella decide usar su arma secreta definitiva: ¡Nemesis! También incluye Resident Evil Resistance, un nuevo modo multijugador online 1 contra 4.</p>
+                        <div class="pie">
+                            <span class="precio">$121.800</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 3 ── -->
+                <a href="juego-nsesion/juego-terraria.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/105600/capsule_616x353.jpg?t=1769844435" alt="Speed Rush Ultimate">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Terraria</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">5</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Sandbox/Supervivencia mundo abierto</span>
+                        </div>
+                        <p class="descripcion">¡Cava, lucha, explora, construye! Con este juego de aventuras repleto de acción nada es imposible. ¡Pack de Cuatro también disponible!</p>
+                        <div class="pie">
+                            <span class="precio">$26.000</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 4 ── -->
+                <a href="juego-nsesion/juego-mortal-kombat-11.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://i0.wp.com/nerfeados.com/wp-content/uploads/2019/05/MK11_Portada.jpg?fit=1024%2C576&ssl=1" alt="Starfield Chronicles">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Mortal Kombat 11</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.2</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Lucha/Sangrientos/Multijugador</span>
+                        </div>
+                        <p class="descripcion">Mortal Kombat ha regresado mejor que nunca en esta entrega de la icónica saga.</p>
+                        <div class="pie">
+                            <span class="precio">$143.999</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+            </div><!-- fin grupo-1 juegos del momento -->
+
+            <!-- ════ GRUPO 2: página 2 (tarjetas 5 a 8) ════
+                 Oculto por defecto con display:none.
+                 El CSS lo muestra con display:grid cuando slide-2 está activo,
+                 usando: #slide-2:checked ~ .juegos-momento .grupo-2 { display: grid; } -->
+            <div class="grupo grupo-2">
+
+                <!-- ── TARJETA 5 ── -->
+                <a href="juego-nsesion/juego-peak.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0oVEeG-Npltjzsc_XvP0d2D1O3BvZlBX_5Q&s" alt="Shadow Legends">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">PEAK</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.5</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Multijugador/Cooperativo</span>
+                        </div>
+                        <p class="descripcion">PEAK es un juego cooperativo de escalada en el que un solo error puede ser fatal. Ya sea en solitario o en grupo, la única esperanza de salir de la misteriosa isla es subiendo hasta la cima de la montaña del centro. ¿Tenéis lo que hace falta para subir al PICO?</p>
+                        <div class="pie">
+                            <span class="precio">$19.000</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 6 ── -->
+                <a href="juego-nsesion/juego-deep-rock-galactic.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://www.zonammorpg.com/wp-content/uploads/2020/04/deeprockgalacticpic04-1620x800.jpg" alt="Abyss Walker">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Deep Rock Galactic</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.8</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Aventura/Cooperativo/FPS</span>
+                        </div>
+                        <p class="descripcion">Deep Rock Galactic es un FPS cooperativo para 1 a 4 jugadores. Juega con unos fornidos enanos espaciales en entornos 100 % destructibles, formados por cuevas generadas proceduralmente e interminables hordas de monstruos alienígenas.</p>
+                        <div class="pie">
+                            <span class="precio">$53.000</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 7 ── -->
+                <a href="juego-nsesion/juego-darkwood.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://image.api.playstation.com/vulcan/ap/rnd/202206/2011/zvvEqRTkLYJlNEKLz4hjwbGz.jpg" alt="Neon Strikers">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Darkwood</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.9</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Terror/Aventura</span>
+                        </div>
+                        <p class="descripcion">Darkwood - una nueva perspectiva en el género survival horror. Explora libremente durante el día un vasto mundo siempre cambiante, y luego atrinchérate en tu escondite al llegar la noche rezando para que llegue la luz de la mañana.</p>
+                        <div class="pie">
+                            <span class="precio">$29.900</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 8 ── -->
+                <a href="juego-nsesion/juego-doom-eternal.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://orgullogamers.com/wp-content/uploads/2020/05/doometernal.webp" alt="Iron Veil">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">DOOM Eternal</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.8</span>
+                            <span class="separador">•</span>
+                            <span class="genero">FPS/Accion/Sangrientos</span>
+                        </div>
+                        <p class="descripcion">Los ejércitos del infierno han invadido la Tierra. Ponte en la piel del Slayer en una épica campaña para un jugador y cruza dimensiones para detener la destrucción definitiva de la humanidad. No le tienen miedo a nada... salvo a ti.</p>
+                        <div class="pie">
+                            <span class="precio">$120.000</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+            </div><!-- fin grupo-2 juegos del momento -->
+
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         SECCIÓN OFERTAS ESPECIALES
+         ══════════════════════════════════════════════ -->
+
+   
+    <input type="radio" name="ofertas" id="oferta-1" checked>
+    <input type="radio" name="ofertas" id="oferta-2">
+
+    <section class="ofertas">
+        <div class="contenedor">
+
+            <div class="seccion-header">
+                <h2>💰 Ofertas Especiales</h2>
+                <div class="flechas">
+                    
+                    <label for="oferta-2" class="flecha oferta-izq-desde-1">&#8249;</label>
+                    <label for="oferta-1" class="flecha oferta-izq-desde-2">&#8249;</label>
+                    <label for="oferta-2" class="flecha oferta-der-desde-1">&#8250;</label>
+                    <label for="oferta-1" class="flecha oferta-der-desde-2">&#8250;</label>
+                </div>
+            </div>
+
+            <!-- ════ GRUPO 1: página 1 (ofertas 1 a 4) ════ -->
+            <div class="grupo oferta-grupo-1">
+
+                <!-- ── OFERTA 1 ──────────────────────────────────
+                     IMAGEN: cambia el src del <img>
+                     INFO:   cambia nombre, badge (porcentaje de descuento),
+                             precio-original (tachado), precio (final), descripcion
+                     ─────────────────────────────────────────────── -->
+                <a href="juego-nsesion/juego-hunt-showdown-1896.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://www.zonammorpg.com/wp-content/uploads/2024/08/huntshowdown1896-1620x800.jpg" alt="Battlefield Legends">
+                        
+                        <!-- BADGE -->
+                        <span class="badge">-60%</span>
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Hunt: Showdown 1896</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">3.8</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Acción/Shooter</span>
+                        </div>
+                        <p class="descripcion">Da caza a los corruptos en los remansos perdidos de la historia. Lucha contra un mal atemporal que te obligará a enfrentarte a monstruos retorcidos y otros cazadores desesperados, en solitario o en grupo, en este juego táctico de disparos en primera persona JcJcE de alto riesgo. Aquí no hay héroes.</p>
+                        <div class="pie">
+                            <div>
+                                <!-- precio-original -->
+                                <span class="precio-original">$94.000</span>
+                                <span class="precio">$37.600</span>
+                            </div>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── OFERTA 2 ── -->
+                <a href="juego-nsesion/juego-death-stranding.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://cdn1.epicgames.com/offer/0a9e3c5ab6684506bd624a849ca0cf39/EGS_DeathStrandingDirectorsCut_KOJIMAPRODUCTIONS_S3_2560x1440-fe4e51f1801fba36e452aa3466625789" alt="Mystic Realm Online">
+                        <span class="badge">-65%</span>
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">DEATH STRANDING DIRECTOR'S CUT</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.8</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Buena trama/Mundo abierto</span>
+                        </div>
+                        <p class="descripcion">El legendario Hideo Kojima nos ofrece una experiencia que desafía los géneros, ahora ampliada con este DIRECTOR’S CUT. Como Sam Bridges, tu misión será dar esperanza a la humanidad conectando a los últimos supervivientes de un país arrasado. ¿Podrás volver a unir, paso a paso, un mundo hecho añicos?</p>
+                        <div class="pie">
+                            <div>
+                                <span class="precio-original">$129.900</span>
+                                <span class="precio">$45.465</span>
+                            </div>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── OFERTA 3 ── -->
+                <a href="juego-nsesion/juego-astroner.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000037336/27b7c212e9900ebbf3fba4c6cb0d0d137e7d0be05f86ab5a954bb7d161e7fb64" alt="Tactical Strike Force">
+                        <span class="badge">-75%</span>
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">ASTRONEER</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.6</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Multijugador/Espacial</span>
+                        </div>
+                        <p class="descripcion">Interactúa con extraños mundos nuevos de una forma única y táctil, moldeando el entorno con tus manos como si fuera arcilla. Construye tu base, domina la gestión de recursos, automatiza tus líneas de producción y más a medida que descubres los misterios del universo a solas o con amigos.</p>
+                        <div class="pie">
+                            <div>
+                                <span class="precio-original">$70.000</span>
+                                <span class="precio">$17.500</span>
+                            </div>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── OFERTA 4 ── -->
+                <a href="juego-nsesion/juego-palworld.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://phantom.estaticos-marca.com/9be94779ed15ddbde4016330d68fb500/resize/828/f/jpg/assets/multimedia/imagenes/2024/01/10/17048900622330.jpg" alt="Lost World Adventures">
+                        <span class="badge">-25%</span>
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Palworld</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.3</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Aventura/Exploración</span>
+                        </div>
+                        <p class="descripcion">Este es un juego multijugador de supervivencia en mundo abierto inmenso y original, en el que tendrás que hacerte con unas misteriosas criaturas llamadas Pals, capaces de combatir, construir, cultivar y trabajar en fábricas.</p>
+                        <div class="pie">
+                            <div>
+                                <span class="precio-original">$70.000</span>
+                                <span class="precio">$52.500</span>
+                            </div>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+            </div><!-- fin oferta-grupo-1 -->
+
+            <!-- ════ GRUPO 2: página 2 (ofertas 5 a 8) ════ -->
+            <div class="grupo oferta-grupo-2">
+
+                <!-- ── OFERTA 5 ── -->
+                <a href="juego-nsesion/juego-stalker-2.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://locosxlosjuegos.com/wp-content/uploads/2026/01/S.T.A.L.K.E.R.-Heart-of-Chernobyl-Portada.jpg" alt="Galactic War">
+                        <span class="badge">-30%</span>
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">S.T.A.L.K.E.R. 2: Heart of Chornobyl</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.7</span>
+                            <span class="separador">•</span>
+                            <span class="genero">FPS/Posapocaliptico</span>
+                        </div>
+                        <p class="descripcion">Descubre la Zona de Exclusión de Chornóbil, un lugar repleto de enemigos peligrosos, anomalías letales y poderosos artefactos. Descubre tu propia historia épica y ábrete paso hasta el corazón de Chornóbil. Elige tu camino sabiamente, ya que tu futuro y el de la humanidad dependerán de lo que elijas.</p>
+                        <div class="pie">
+                            <div>
+                                <span class="precio-original">$198.900</span>
+                                <span class="precio">$139.230</span>
+                            </div>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── OFERTA 6 ── -->
+                <a href="juego-nsesion/juego-the-long-dark.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://cdn1.epicgames.com/58dfcd1952ee48c1a1fa31c6ace5fe3d/offer/EGS_TheLongDark_HinterlandStudioInc_S5-1920x1080-fcfdd407ac1990bec320b49101862585.jpg" alt="Dragon Quest Legends">
+                        <span class="badge">-90%</span>
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">The Long Dark</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.8</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Supervivencia</span>
+                        </div>
+                        <p class="descripcion">The Long Dark ofrece una experiencia de exploración y supervivencia que desafía a los jugadores a pensar por sí mismos en territorios fríos y salvajes tras las consecuencias de un desastre geomagnético. Aquí no hay zombis, solo tú, el frío y cualquier amenaza que la madre naturaleza pueda presentarte.</p>
+                        <div class="pie">
+                            <div>
+                                <span class="precio-original">$81.000</span>
+                                <span class="precio">$8.100</span>
+                            </div>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── OFERTA 7 ── -->
+                <a href="juego-nsesion/juego-rdr-2.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://sm.ign.com/ign_latam/screenshot/default/rdr2_29y8.jpg" alt="Urban Racer X">
+                        <span class="badge">-75%</span>
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Red Dead Redemption 2</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">5</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Mundo abierto/Buena trama</span>
+                        </div>
+                        <p class="descripcion">Arthur Morgan y la banda de Van der Linde se ven obligados a huir. Con agentes federales y cazarrecompensas pisándoles los talones, la banda deberá atracar, robar y luchar para sobrevivir en su camino por el escabroso territorio.</p>
+                        <div class="pie">
+                            <div>
+                                <span class="precio-original">$239.999</span>
+                                <span class="precio">$59.999</span>
+                            </div>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── OFERTA 8 ── -->
+                <a href="juego-nsesion/juego-outlast.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://media.vandal.net/m/80035/the-outlast-trials-2022103118301040_9.jpg" alt="Crime Empire">
+                        <span class="badge">-70%</span>
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">The Outlast Trials</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.5</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Terror/Multijugador</span>
+                        </div>
+                        <p class="descripcion">Red Barrels invites you to experience mind-numbing terror, this time with friends. Whether you go through the trials alone or in teams, if you survive long enough and complete the therapy, Murkoff will happily let you leave… but will you be the same?</p>
+                        <div class="pie">
+                            <div>
+                                <span class="precio-original">$86.000</span>
+                                <span class="precio">$25.800</span>
+                            </div>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+            </div><!-- fin oferta-grupo-2 -->
+
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         SECCIÓN MEJOR VALORADOS
+         ══════════════════════════════════════════════ -->
+    <section class="mejor-valorados">
+        <div class="contenedor">
+
+            <div class="seccion-header">
+                <h2>⭐ Mejor Valorados</h2>
+        
+            </div>
+
+            <!-- .grid: clase propia para el grid de 3 columnas de esta sección.
+                 Diferente a .grupo (que es de 4 columnas) para no mezclar estilos -->
+            <div class="grid">
+
+                <!-- ── TARJETA 1 ─────────────────────────────────
+                     IMAGEN  
+                     INFO:   nombre, puntuacion, genero, descripcion, precio
+                     ─────────────────────────────────────────────── -->
+                <a href="juego-nsesion/juego-resident-evil-3.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://imagenes.hobbyconsolas.com/files/image_640_360/uploads/imagenes/2023/04/25/690227fe3b5ba.jpeg" alt="Dark Souls: Eternal">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Resident Evil 3</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.0</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Acción/Aventura/Zombie</span>
+                        </div>
+                        <p class="descripcion">Jill Valentine es una de las pocas personas que quedan en Raccoon City que han sido testigos de las atrocidades de Umbrella. Para detenerla, Umbrella decide usar su arma secreta definitiva: ¡Nemesis! También incluye Resident Evil Resistance, un nuevo modo multijugador online 1 contra 4.</p>
+                        <div class="pie">
+                            <span class="precio">$121.800</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 2 ── -->
+                <a href="juego-nsesion/juego-madness.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://static.wikia.nocookie.net/madnesscombat/images/2/26/ProjectNexus.jpg/revision/latest?cb=20221024203408&path-prefix=es" alt="Silent Shadows">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">MADNESS: Project Nexus</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">5</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Hack and slash</span>
+                        </div>
+                        <p class="descripcion">MADNESS: Project Nexus is a third-person Run n' Gun / Beat'Em Up filled with arcade-style action and button-mashing brutality. Gun your way through droves of bad guys in the Story Campaign, or build your perfect killing machine in the neverending onslaught of Arena Mode.</p>
+                        <div class="pie">
+                            <span class="precio">$33.500</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 3 ── -->
+                <a href="juego-nsesion/juego-helldrivers2.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://a.storyblok.com/f/178900/768x432/1c7b91c44a/helldivers-2.jpg/m/filters:quality(95)format(webp)" alt="Cyber Nexus 2077">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">HELLDIVERS™ 2</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.5</span>
+                            <span class="separador">•</span>
+                            <span class="genero">JcE/Acción/Cooperativo en lìnea</span>
+                        </div>
+                        <p class="descripcion">La última línea de ataque de la galaxia. Alístate en los Helldivers y únete a la lucha por la libertad en una galaxia hostil en un juego de disparos en tercera persona rápido, frenético y feroz.</p>
+                        <div class="pie">
+                            <span class="precio">$149.000</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 4 ── -->
+                <a href="juego-nsesion/juego-ultrakill.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://i.3djuegos.com/juegos/17573/fotos/ficha/-5268516.jpg" alt="Empire Strategy">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">ULTRAKILL</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">5</span>
+                            <span class="separador">•</span>
+                            <span class="genero">FPS/Sangre/Retro</span>
+                        </div>
+                        <p class="descripcion">ULTRAKILL is a fast-paced ultra-violent retro FPS that combines the skill-based style scoring of character action games with the unadulterated carnage inspired by the best shooters of the '90s. Rip apart your foes with varied destructive weaponry and shower in their blood to regain your health.</p>
+                        <div class="pie">
+                            <span class="precio">$58.800</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 5 ── -->
+                <a href="juego-nsesion/juego-skyrim.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://cdn1.epicgames.com/offer/c8738a4d1ead40368eab9688b3c7d737/EGS_TheElderScrollsVSkyrimAnniversaryEdition_BethesdaGameStudios_Editions_S1_2560x1440-accc22362e1ae7bf4c1fe215f357c5a6?resize=1&w=480&h=270&quality=medium" alt="Indie Quest">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">The Elder Scrolls V: Skyrim Special Edition</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.8</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Rol/Aventura</span>
+                        </div>
+                        <p class="descripcion">The Elder Scrolls V: Skyrim Special Edition, ganador de más de 200 premios al “Juego del año”, da vida a la fantasía épica con un nivel de detalle asombroso. La Special Edition incluye el juego aclamado por la crítica y complementos con nuevas funcionalidades.</p>
+                        <div class="pie">
+                            <span class="precio">$119.999</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 6 ── -->
+                <a href="juego-nsesion/juego-mortal-kombat-11.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://i0.wp.com/nerfeados.com/wp-content/uploads/2019/05/MK11_Portada.jpg?fit=1024%2C576&ssl=1" alt="Starfield Chronicles">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Mortal Kombat 11</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.2</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Lucha/Sangrientos/Multijugador</span>
+                        </div>
+                        <p class="descripcion">Mortal Kombat ha regresado mejor que nunca en esta entrega de la icónica saga.</p>
+                        <div class="pie">
+                            <span class="precio">$143.999</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+            </div><!-- fin .grid mejor valorados -->
+
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         SECCIÓN ACTUALIZADOS RECIENTEMENTE
+         ══════════════════════════════════════════════ -->
+
+    <!-- Radios de actualizados: justo antes de su sección -->
+    <input type="radio" name="actualizados" id="actual-1" checked>
+    <input type="radio" name="actualizados" id="actual-2">
+
+    <section class="actualizados">
+        <div class="contenedor">
+
+            <div class="seccion-header">
+                <h2>🆕 Actualizados Recientemente</h2>
+                <div class="flechas">
+                    <label for="actual-2" class="flecha actual-izq-desde-1">&#8249;</label>
+                    <label for="actual-1" class="flecha actual-izq-desde-2">&#8249;</label>
+                    <label for="actual-2" class="flecha actual-der-desde-1">&#8250;</label>
+                    <label for="actual-1" class="flecha actual-der-desde-2">&#8250;</label>
+                </div>
+            </div>
+
+            <!-- ════ GRUPO 1: página 1 (juegos 1 a 4) ════ -->
+            <div class="grupo grupo-1">
+
+                <!-- ── TARJETA 1 ─────────────────────────────────
+                     IMAGEN
+                     INFO:   cambia nombre, puntuacion, genero, descripcion, precio
+                     Si el juego es gratuito: usar class="precio precio-gratis" en el span
+                     ─────────────────────────────────────────────── -->
+                <a href="juego-nsesion/juego-brawlhalla.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://cdn.aptoide.com/imgs/8/4/a/84aaa60ac0a211285722dfc7bffb134a_fgraphic.jpg" alt="War Zone Elite">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Brawlhalla</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">3.5</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Lucha/Multijugador</span>
+                        </div>
+                        <p class="descripcion">An epic platform fighter for up to 8 players online or local. Try casual free-for-alls, ranked matches, or invite friends to a private room. And it's free! Play cross-platform with millions of players on PlayStation, Xbox, Nintendo Switch, iOS, Android & Steam! Frequent updates. Over sixty Legends.</p>
+                        <div class="pie">
+                            <!-- precio-gratis: clase extra que cambia el color a verde más brillante -->
+                            <span class="precio precio-gratis">GRATIS</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 2 ── -->
+                <a href="juego-nsesion/juego-ball-x-pit.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://cdn.dlcompare.com/others_jpg/upload/news/image/ball-x-pit-is-expanding-with-new-541a4ac8-image-704004ab4.jpg.webp" alt="Fantasy Kingdoms">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">BALL x PIT</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.6</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Arcade/Roguelite</span>
+                        </div>
+                        <p class="descripcion">BALL x PIT es un roguelite de supervivencia en el que hay que romper ladrillos, fusionar bolas y construir bases. Vence a enemigos con bolas que rebotan y peina el foso para ampliar tu hogar, generar recursos y reclutar a héroes.</p>
+                        <div class="pie">
+                            <span class="precio">$37.500</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 3 ── -->
+                <a href="juego-nsesion/juego-borderlands-3.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://i.blogs.es/juegos/11199/borderlands_3/fotos/noticias/borderlands_3-4855853.jpg" alt="Neon Racers">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Borderlands 3</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.4</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Rol/Disparos y botìn</span>
+                        </div>
+                        <p class="descripcion">¡Vuelve el padre de los shooter-looter, con una aventura llena de caos y tropecientas mil armas!</p>
+                        <div class="pie">
+                            <span class="precio">$169.900</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 4 ── -->
+                <a href="juego-nsesion/juego-dying-light.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://www.zonammorpg.com/wp-content/uploads/2026/03/Dying-Light-The-Beast-Restored-Land-key-visual.jpg" alt="Space Explorers">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Dying Light: The Beast Restored Land</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.2</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Zombie/Mundo abierto</span>
+                        </div>
+                        <p class="descripcion">Eres Kyle Crane y buscas vengarte tras haber sufrido años de experimentos. Descubre un mundo abierto que mezcla la acción, la supervivencia y el terror mientras buscas a quien te convirtió en mitad bestia, mitad humano.</p>
+                        <div class="pie">
+                            <span class="precio">$199.900</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+            </div><!-- fin grupo-1 actualizados -->
+
+            <!-- ════ GRUPO 2: página 2 (juegos 5 a 8) ════ -->
+            <div class="grupo grupo-2">
+
+                <!-- ── TARJETA 5 ── -->
+                <a href="juego-nsesion/juego-look-outside.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3373660/770f4d1538b590421beba1e1217d9e6a8411fde9/header_alt_assets_2.jpg" alt="Storm Breaker">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Look Outside</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.9</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Rol/Pixelados/Terror</span>
+                        </div>
+                        <p class="descripcion">Look Outside es un RPG de terror y supervivencia ambientado en un bloque de apartamentos, donde un suceso misterioso transforma en monstruos grotescos a quienes se asoman a la ventana. En pleno caos, rebusca comida, suministros y armas mientras te topas con personajes de lo más peculiares.</p>
+                        <div class="pie">
+                            <span class="precio">$26.000</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 6 ── -->
+                <a href="juego-nsesion/juego-lethal-company.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1966720/capsule_616x353.jpg?t=1762544438" alt="Pixel Dungeon II">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Lethal Company</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.0</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Cooperativo/Terror</span>
+                        </div>
+                        <p class="descripcion">A co-op horror about scavenging at abandoned moons to sell scrap to the Company.</p>
+                        <div class="pie">
+                            <span class="precio precio-gratis">26.000</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 7 ── -->
+                <a href="juego-nsesion/juego-cloverpit.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3314790/e6955b668c667da7b5019f481707f69b4fb814b5/capsule_616x353.jpg?t=1773337831" alt="Mech Warrior Online">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">CloverPit</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.7</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Apuestas/Roguelite</span>
+                        </div>
+                        <p class="descripcion">Un juego «rogue-lite» con máquinas tragaperras de pesadilla. Apuesta tu vida en un simulador de deuda interminable.</p>
+                        <div class="pie">
+                            <span class="precio">$26.000</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+                <!-- ── TARJETA 8 ── -->
+                <a href="juego-nsesion/juego-crysol.html" class="tarjeta-link">
+                <article class="tarjeta">
+                    <div class="imagen">
+                        <img src="https://periodismo.ull.es/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-03-at-11.07.32.jpeg" alt="Island Craft">
+                    </div>
+                    <div class="info">
+                        <h3 class="nombre">Crisol: Theater of Idols</h3>
+                        <div class="meta">
+                            <span class="estrella">★</span>
+                            <span class="puntuacion">4.0</span>
+                            <span class="separador">•</span>
+                            <span class="genero">Terror/FPS</span>
+                        </div>
+                        <p class="descripcion">Crisol: Theater of Idols es un juego de acción y terror en primera persona ambientado en Hispania, una versión retorcida de España. Sé Gabriel, un soldado que puede usar su sangre como munición. Explora Tormentosa, descubre oscuros secretos y... ¿sobrevive?</p>
+                        <div class="pie">
+                            <span class="precio">$43.500</span>
+                            <button class="btn-agregar">🛒 Agregar</button>
+                        </div>
+                    </div>
+                </article>
+                </a>
+
+            </div><!-- fin grupo-2 actualizados -->
+
+        </div>
+    </section>
+
+    </main>
+    <!-- Fin del contenido principal -->
+
+    <!-- ══════════════════════════════════════════════
+         FOOTER: pie de página con información general.
+         ══════════════════════════════════════════════ -->
+    <footer>
+        <div class="contenedor">
+
+            <!-- Grid de 3 columnas: logo+redes, enlaces rápidos+legal juntos, contacto -->
+            <div class="footer-grid">
+
+                <!-- ── COLUMNA 1: logo, descripción y redes sociales ── -->
+                <div class="footer-col">
+                    <!-- Logo con el mismo degradado que el del header -->
+                    <div class="logo-footer">DARKBOX</div>
+                    <p class="footer-desc">Tu plataforma de confianza para juegos digitales. Los mejores títulos al mejor precio.</p>
+
+                    <!-- Redes sociales: cada <a> es un ícono circular con borde.
+                         Al hacer hover el borde y el ícono se vuelven morados.
+                         href="#" es un enlace vacío, en el futuro apuntará a la red real. -->
+                    <div class="redes">
+                        <a href="#" aria-label="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <circle cx="12" cy="12" r="4"/>
+                                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="YouTube">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+                                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#101828"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ── COLUMNA 2: enlaces rápidos ── -->
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <!-- UL: lista desordenada. LI: cada elemento de la lista.
+                         Los <a> son enlaces que al hacer hover cambian a morado.
+                         En el futuro cambia href="#" por la ruta de cada página. -->
+                    <ul>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Mi Biblioteca</a></li>
+                        <li><a href="#">Ofertas</a></li>
+                        <li><a href="#">Novedades</a></li>
+                    </ul>
+                </div>
+
+                <!-- ── COLUMNA 3: legal ── -->
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Política de Reembolso</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+
+                <!-- ── COLUMNA 4: contacto ── -->
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+
+                    <!-- Cada ítem de contacto: ícono SVG morado + texto gris -->
+                    <div class="contacto-item">
+                        <!-- Ícono de email -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        <span id="footer-email-homehtml"></span>
+                    </div>
+
+                    <div class="contacto-item">
+                        <!-- Ícono de teléfono -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.1 6.1l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+
+                </div>
+
+            </div><!-- fin footer-grid -->
+
+            <!-- Línea separadora y texto de copyright -->
+            <div class="footer-bottom">
+                
+                <p>© 2026 Darkbox. Todos los derechos reservados.

@@ -1,0 +1,347 @@
+/* ══════════════════════════════════════════════════
+   DARKBOX — carrito.css
+   Estilos exclusivos de la página del carrito.
+   ══════════════════════════════════════════════════ */
+
+
+/* ── PÁGINA ── */
+.carrito-pagina {
+    padding-top: 100px;
+    padding-bottom: 80px;
+    min-height: 100vh;
+}
+
+.carrito-titulo {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    color: white;
+    margin: 0 0 32px 0;
+}
+
+
+/* ── LAYOUT: lista izquierda + resumen derecha ── */
+.carrito-layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 28px;
+    align-items: start;
+}
+
+
+/* ══════════════════════════════════════════════════
+   TARJETAS DE JUEGOS EN EL CARRITO
+   ══════════════════════════════════════════════════ */
+.carrito-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #151d2e;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    /* Animación suave al aparecer */
+    animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Imagen del juego */
+.item-imagen {
+    width: 100px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+    background: #0a0f1e; /* placeholder mientras carga */
+}
+
+/* Bloque de texto */
+.item-info {
+    flex: 1; /* ocupa todo el espacio disponible */
+}
+
+.item-nombre {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: white;
+    margin: 0 0 4px 0;
+}
+
+.item-genero {
+    font-family: "Inter", sans-serif;
+    font-size: 0.85rem;
+    color: #8888aa;
+    margin: 0 0 8px 0;
+}
+
+.item-precio {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #22c55e; /* verde igual que en la página del juego */
+    margin: 0;
+}
+
+/* Botón eliminar (ícono basura) */
+.item-eliminar {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #8888aa;
+    padding: 8px;
+    border-radius: 8px;
+    transition: color 0.2s ease, background 0.2s ease;
+    flex-shrink: 0;
+}
+
+.item-eliminar svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.item-eliminar:hover {
+    color: #f87171; /* rojo al pasar el cursor */
+    background: rgba(248, 113, 113, 0.1);
+}
+
+
+/* ══════════════════════════════════════════════════
+   ESTADO VACÍO
+   Se muestra cuando no hay juegos en el carrito.
+   ══════════════════════════════════════════════════ */
+.carrito-vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 80px 20px;
+    color: #8888aa;
+    font-family: "Inter", sans-serif;
+    font-size: 1.1rem;
+    text-align: center;
+    background: #151d2e;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+}
+
+.carrito-vacio svg {
+    width: 56px;
+    height: 56px;
+    opacity: 0.4;
+}
+
+.carrito-vacio p {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Botón "Explorar juegos" en el estado vacío */
+.btn-vacio {
+    display: inline-block;
+    background: linear-gradient(90deg, #7c3aed, #E60076);
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+    margin-top: 8px;
+}
+.btn-vacio:hover { opacity: 0.85; transform: translateY(-1px); }
+
+
+/* ══════════════════════════════════════════════════
+   PANEL DE RESUMEN (lateral derecho)
+   ══════════════════════════════════════════════════ */
+.carrito-resumen {
+    background: #151d2e;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
+    padding: 28px 24px;
+    position: sticky;
+    top: 86px; /* se queda fijo al hacer scroll, debajo del header */
+}
+
+.resumen-titulo {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: 1.3rem;
+    color: white;
+    margin: 0 0 20px 0;
+}
+
+/* Fila de subtotal / descuentos / total */
+.resumen-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    font-size: 0.95rem;
+    color: #aaaacc;
+    margin-bottom: 12px;
+}
+
+
+/* Línea separadora */
+.resumen-separador {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    margin: 16px 0;
+}
+
+/* Fila del total: más grande y en blanco */
+.resumen-total {
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 24px;
+}
+
+.resumen-total span:last-child {
+    font-size: 1.3rem;
+    color: white;
+}
+
+/* Botón principal "Proceder al Pago" */
+.btn-proceder {
+    width: 100%;
+    background: linear-gradient(90deg, #7c3aed, #E60076);
+    border: none;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+.btn-proceder:hover  { opacity: 0.85; transform: translateY(-1px); }
+.btn-proceder:active { transform: translateY(0); }
+
+/* Botón secundario "Continuar Comprando" */
+.btn-continuar {
+    display: block;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 13px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.2s ease;
+    box-sizing: border-box;
+}
+.btn-continuar:hover { background: rgba(255, 255, 255, 0.1); }
+
+
+/* ══════════════════════════════════════════════════
+   BADGE DEL HEADER (contador rojo en el botón Carrito)
+   Funciona en TODAS las páginas que incluyan carrito.js.
+   ══════════════════════════════════════════════════ */
+/* ── BOTÓN CARRITO CON BADGE ────────────────────────────────────
+   position:relative es necesario para que el badge hijo con
+   position:absolute se posicione relativo al botón, no a la página. */
+.btn-carrito-header {
+    position: relative;
+
+    /* CAMBIO: se añade padding-right extra para que el badge tenga
+       espacio a la derecha sin tapar el texto "Carrito".
+       Antes el badge se superponía encima del texto porque right:-6px
+       lo ubicaba justo encima de la última letra. */
+    padding-right: 22px;
+}
+
+/* ── BADGE (contador de artículos) ──────────────────────────────
+   CAMBIOS respecto a la versión anterior:
+
+   1. Tamaño: de 18×18px a 16×16px. Más compacto y discreto.
+
+   2. Posición: top:-8px y right:-4px en lugar de top:-6px, right:-6px.
+      Ahora el badge sale hacia arriba-derecha del botón, fuera del área
+      del texto, en vez de superponerse encima de él.
+
+   3. Tipografía: font-size baja de 0.7rem a 0.65rem para que el número
+      quepa cómodo dentro del círculo más pequeño.
+
+   4. Borde blanco sutil: box-shadow simula un borde blanco de 1.5px
+      alrededor del círculo. Esto lo separa visualmente del fondo del
+      header y le da más definición. Se usa box-shadow en lugar de border
+      para no alterar las dimensiones del elemento.
+
+   5. letter-spacing:-0.5px: ajuste fino para que números de 2 dígitos
+      (ej. "12") quepan sin deformar el círculo. */
+.carrito-badge {
+    position: absolute;
+    top: -8px;      /* sube el badge por encima del borde superior del botón */
+    right: -4px;    /* lo desplaza justo fuera del borde derecho del botón */
+
+    background: #E60076;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: -0.5px; /* compacta ligeramente el número si tiene 2 dígitos */
+
+    /* Dimensiones ligeramente menores para que no domine visualmente */
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Borde blanco simulado con box-shadow.
+       No altera el tamaño del elemento (a diferencia de border:). */
+    box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.6);
+
+    pointer-events: none; /* los clics pasan al botón, no al badge */
+
+    /* Animación al aparecer/actualizarse: escala de 0 a 1.
+       Así el badge "salta" visualmente cuando se agrega un juego. */
+    animation: badge-pop 0.2s ease;
+}
+
+/* Animación de aparición del badge */
+@keyframes badge-pop {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+
+/* ══ RESPONSIVE ══════════════════════════════════ */
+@media (max-width: 900px) {
+    .carrito-layout {
+        grid-template-columns: 1fr;
+    }
+    .carrito-resumen {
+        position: static;
+    }
+}
+
+@media (max-width: 600px) {
+    .item-imagen {
+        width: 72px;
+    }
+    .item-nombre {
+        font-size: 0.9rem;
+    }
+}

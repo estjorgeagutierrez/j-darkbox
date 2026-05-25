@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>DARKBOX — Juego</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="carrito.css">
+    <link rel="stylesheet" href="juego-single.css">
+    <link rel="stylesheet" href="cookies.css">
+    <style>
+        /* Galería dinámica con JS (no radios CSS) */
+        .galeria-grande { position:relative; width:100%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.07); background:#0a0f1e; }
+        .galeria-grande img { width:100%; height:100%; object-fit:cover; display:block; }
+        .galeria-thumbs { display:flex; gap:10px; margin-top:12px; }
+        .thumb-dinamico { flex:1; aspect-ratio:16/9; border-radius:6px; overflow:hidden; cursor:pointer; border:2px solid transparent; opacity:0.5; transition:border-color 0.2s,opacity 0.2s; }
+        .thumb-dinamico img { width:100%; height:100%; object-fit:cover; display:block; }
+        .thumb-dinamico:hover { opacity:0.8; }
+        .thumb-dinamico.activo { border-color:#a855f7; opacity:1; }
+        /* Estado cargando */
+        .estado-cargando { display:flex; flex-direction:column; align-items:center; gap:16px; padding:80px 20px; color:#8888aa; font-family:Inter,sans-serif; }
+        .spinner { width:40px; height:40px; border:3px solid rgba(168,85,247,0.2); border-top-color:#a855f7; border-radius:50%; animation:spin 0.8s linear infinite; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+    </style>
+</head>
+<body>
+ 
+<!-- Checkbox para las pestañas de requisitos — igual que en helldrivers -->
+<input type="checkbox" id="toggle-req" style="position:absolute;opacity:0;width:0;height:0;">
+<input type="checkbox" id="toggle-menu" style="position:absolute;opacity:0;width:0;height:0;">
+ 
+<header>
+    <div class="contenedor">
+        <a href="home-sesion.html" class="logo">DARKBOX</a>
+        <div class="buscador">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Buscar juegos...">
+        </div>
+        <nav>
+            <button onclick="window.location.href='biblioteca.html'" class="btn-nav-text">📊 Biblioteca</button>
+            <button class="btn-carrito-header" onclick="window.location.href='carrito.html'">
+                🛒 Carrito
+                <span id="carrito-badge" class="carrito-badge" style="display:none;">0</span>
+            </button>
+            <span class="usuario-nombre">👤 Usuario</span>
+            <a href="#" onclick="cerrarSesion(event)" class="btn-salir">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </a>
+        </nav>
+        <label for="toggle-menu" class="hamburguesa"><span></span><span></span><span></span></label>
+    </div>
+</header>
+ 
+<div class="menu-movil">
+    <button onclick="window.location.href='biblioteca.html'" class="btn-nav-text">📊 Biblioteca</button>
+    <button onclick="window.location.href='carrito.html'">🛒 Carrito</button>
+    <span class="usuario-nombre">👤 Usuario</span>
+    <a href="#" onclick="cerrarSesion(event)" class="btn-salir-movil">↪ Salir</a>
+</div>
+ 
+<main>
+<div class="juego-pagina">
+<div class="contenedor">
+ 
+    <!-- Botón volver — volver.js lo ajusta dinámicamente -->
+    <a href="catalogo.html" class="btn-volver">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Volver al catálogo
+    </a>
+ 
+    <!-- Cargando -->
+    <div id="estado-cargando" class="estado-cargando">
+        <div class="spinner"></div>
+        <p style="margin:0;font-size:1rem;">Cargando juego...</p>
+    </div>
+ 
+    <!-- Error -->
+    <div id="estado-error" style="display:none;text-align:center;padding:80px 20px;color:#8888aa;font-family:Inter,sans-serif;">
+        <p style="font-size:1.1rem;font-weight:600;">No se encontró el juego.</p>
+        <a href="catalogo.html" style="color:#a855f7;">← Volver al catálogo</a>
+    </div>
+ 
+    <!-- Contenido del juego -->
+    <div id="juego-contenido" style="display:none;">
+ 
+        <!-- ZONA SUPERIOR: galería + panel -->
+        <div class="juego-top">
+ 
+            <!-- Galería -->
+            <div>
+                <div class="galeria-grande">
+                    <img id="img-principal" src="" alt="">
+                </div>
+                <div class="galeria-thumbs" id="galeria-thumbs"></div>
+            </div>
+ 
+            <!-- Panel lateral de compra -->
+            <div class="juego-panel">
+                <img id="panel-portada" src="" alt="" class="juego-panel-img">
+                <div class="juego-panel-body">
+                    <p class="juego-panel-precio" id="panel-precio">$0</p>
+                    <button class="juego-panel-btn" id="btn-compra" onclick="agregarAlCarrito()">
+                        🛒 Agregar al Carrito
+                    </button>
+                    <hr class="juego-panel-sep">
+                    <div class="juego-panel-meta">
+                        <span>🎮</span><span>Género:</span>
+                        <span class="val" id="panel-genero">—</span>
+                    </div>
+                    <div class="juego-panel-meta">
+                        <span>🌐</span><span>Plataforma:</span>
+                        <span class="val" id="panel-plataforma">PC (Windows)</span>
+                    </div>
+                    <div class="juego-panel-meta" id="panel-fecha-zona" style="display:none;">
+                        <span>📅</span><span>Lanzamiento:</span>
+                        <span class="val" id="panel-fecha">—</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- ZONA INFERIOR -->
+        <div class="juego-bottom">
+            <h1 class="juego-titulo" id="juego-titulo">Cargando...</h1>
+ 
+            <div class="juego-meta-fila">
+                <span class="juego-badge-genero" id="badge-genero">—</span>
+                <span class="sep">|</span>
+                <span id="meta-plataforma">PC (Windows)</span>
+                <span class="sep" id="sep-desarrollador" style="display:none;">|</span>
+                <span id="meta-desarrollador" style="display:none;">
+                    <strong id="txt-desarrollador"></strong>
+                </span>
+            </div>
+ 
+            <!-- Descripción -->
+            <div class="juego-seccion">
+                <h3>Descripción</h3>
+                <p class="juego-descripcion-texto" id="juego-descripcion">Sin descripción disponible.</p>
+            </div>
+ 
+            <!-- Características -->
+            <div class="juego-seccion" id="seccion-caracteristicas" style="display:none;">
+                <h3>Características Principales</h3>
+                <ul class="juego-caracteristicas" id="lista-caracteristicas"></ul>
+            </div>
+ 
+            <!-- Requisitos del sistema — misma estructura que helldrivers -->
+            <div class="juego-seccion" id="seccion-requisitos" style="display:none;">
+                <h3>Requisitos del Sistema</h3>
+ 
+                <div class="req-tabs">
+                    <label for="toggle-req" class="req-tab req-label-minimos">Mínimos</label>
+                    <label for="toggle-req" class="req-tab req-label-recomendados">Recomendados</label>
+                </div>
+ 
+                <!-- Mínimos -->
+                <div class="req-minimos req-panel" id="panel-minimos"></div>
+ 
+                <!-- Recomendados -->
+                <div class="req-recomendados req-panel" id="panel-recomendados"></div>
+            </div>
+ 
+        </div>
+    </div>
+ 
+</div>
+</div>
+</main>
+ 
+<footer>
+    <div class="contenedor">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo-footer">DARKBOX</div>
+                <p class="footer-desc">Tu plataforma de confianza para juegos digitales.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="home-sesion.html">Inicio</a></li>
+                    <li><a href="catalogo.html">Catálogo</a></li>
+                    <li><a href="carrito.html">Carrito</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Darkbox. Todos los derechos reservados.</p></div>
+    </div>
+</footer>
+ 
+<script src="supabase.js"></script>
+<script src="carrito.js"></script>
+<script src="biblioteca.js"></script>
+<script>
+var JUEGO = null;
+ 
+/* SVGs de los iconos de requisitos — iguales a helldrivers */
+var SVG_OS  = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>';
+var SVG_CPU = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>';
+var SVG_RAM = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="2"/><line x1="6" y1="7" x2="6" y2="3"/><line x1="10" y1="7" x2="10" y2="3"/><line x1="14" y1="7" x2="14" y2="3"/><line x1="18" y1="7" x2="18" y2="3"/></svg>';
+var SVG_GPU = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/><line x1="6" y1="6" x2="6" y2="3"/><line x1="18" y1="6" x2="18" y2="3"/></svg>';
+var SVG_HDD = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>';
+var SVG_CHK = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+ 
+function reqItem(svg, label, valor) {
+    if (!valor) return '';
+    return '<div class="req-item">' + svg +
+        '<div class="req-item-textos">' +
+        '<span class="req-label">' + label + '</span>' +
+        '<span class="req-valor">' + valor + '</span>' +
+        '</div></div>';
+}
+ 
+function buildReqPanel(j, prefijo) {
+    return reqItem(SVG_OS,  'Sistema Operativo', j[prefijo + '_os'])  +
+           reqItem(SVG_CPU, 'Procesador',        j[prefijo + '_cpu']) +
+           reqItem(SVG_RAM, 'Memoria',           j[prefijo + '_ram']) +
+           reqItem(SVG_GPU, 'Gráficos',          j[prefijo + '_gpu']) +
+           reqItem(SVG_HDD, 'Almacenamiento',    j[prefijo + '_disco']);
+}
+ 
+function formatearPrecio(n) {
+    if (n === 0) return 'GRATIS';
+    return '$' + Number(n).toLocaleString('es-CO');
+}
+ 
+/* Galería dinámica */
+function buildGaleria(imgs) {
+    var principal = document.getElementById('img-principal');
+    var thumbsZona = document.getElementById('galeria-thumbs');
+    if (!imgs || imgs.length === 0) return;
+ 
+    principal.src = imgs[0];
+ 
+    if (imgs.length <= 1) return; /* sin miniaturas si solo hay 1 imagen */
+ 
+    thumbsZona.innerHTML = imgs.map(function(url, i) {
+        return '<div class="thumb-dinamico' + (i===0?' activo':'') + '" onclick="cambiarSlide(' + i + ',this)">' +
+               '<img src="' + url + '" alt="miniatura ' + (i+1) + '">' +
+               '</div>';
+    }).join('');
+}
+ 
+function cambiarSlide(idx, el) {
+    var imgs = JUEGO ? (JUEGO.imagenes ? JUEGO.imagenes.split(',').map(function(s){return s.trim();}) : [JUEGO.imagen]) : [];
+    if (!imgs[idx]) return;
+    document.getElementById('img-principal').src = imgs[idx];
+    document.querySelectorAll('.thumb-dinamico').forEach(function(t){ t.classList.remove('activo'); });
+    el.classList.add('activo');
+}
+ 
+function mostrarJuego(j) {
+    JUEGO = j;
+    document.title = 'DARKBOX — ' + j.nombre;
+ 
+    /* Galería */
+    var imgs = j.imagenes
+        ? j.imagenes.split(',').map(function(s){return s.trim();})
+        : [j.imagen];
+    buildGaleria(imgs);
+ 
+    /* Panel lateral */
+    document.getElementById('panel-portada').src  = j.imagen || imgs[0];
+    document.getElementById('panel-portada').alt  = j.nombre;
+    document.getElementById('panel-precio').textContent  = formatearPrecio(j.precio);
+    document.getElementById('panel-genero').textContent  = j.genero || '—';
+    document.getElementById('panel-plataforma').textContent = j.plataformas || 'PC (Windows)';
+    if (j.fecha_lanzamiento) {
+        document.getElementById('panel-fecha').textContent = j.fecha_lanzamiento;
+        document.getElementById('panel-fecha-zona').style.display = 'flex';
+    }
+ 
+    /* Título y meta */
+    document.getElementById('juego-titulo').textContent = j.nombre;
+    document.getElementById('badge-genero').textContent = j.genero || '—';
+    document.getElementById('meta-plataforma').textContent = j.plataformas || 'PC (Windows)';
+    if (j.desarrollador) {
+        document.getElementById('sep-desarrollador').style.display = '';
+        document.getElementById('meta-desarrollador').style.display = '';
+        document.getElementById('txt-desarrollador').textContent = j.desarrollador;
+    }
+ 
+    /* Descripción */
+    if (j.descripcion) {
+        document.getElementById('juego-descripcion').textContent = j.descripcion;
+    }
+ 
+    /* Características: idiomas, publicador, etc. */
+    var caract = [];
+    if (j.idiomas)       caract.push('Idiomas disponibles: ' + j.idiomas);
+    if (j.publicador)    caract.push('Publicador: ' + j.publicador);
+    if (j.desarrollador) caract.push('Desarrollador: ' + j.desarrollador);
+    if (j.plataformas)   caract.push('Plataformas: ' + j.plataformas);
+ 
+    if (caract.length > 0) {
+        document.getElementById('seccion-caracteristicas').style.display = 'block';
+        document.getElementById('lista-caracteristicas').innerHTML = caract.map(function(c){
+            return '<li>' + SVG_CHK + c + '</li>';
+        }).join('');
+    }
+ 
+    /* Requisitos */
+    var minHtml = buildReqPanel(j, 'req_min');
+    var recHtml = buildReqPanel(j, 'req_rec');
+    if (minHtml || recHtml) {
+        document.getElementById('seccion-requisitos').style.display = 'block';
+        document.getElementById('panel-minimos').innerHTML    = minHtml;
+        document.getElementById('panel-recomendados').innerHTML = recHtml;
+    }
+ 
+    /* Mostrar contenido */
+    document.getElementById('estado-cargando').style.display = 'none';
+    document.getElementById('juego-contenido').style.display = 'block';
+}
+ 
+async function agregarAlCarrito() {
+    if (!JUEGO) return;
+    var btn = document.getElementById('btn-compra');
+    if (btn.disabled) return;
+    btn.disabled = true; btn.innerHTML = 'Agregando...';
+ 
+    var ok = await Carrito.agregar({
+        id:     JUEGO.id,
+        nombre: JUEGO.nombre,
+        genero: JUEGO.genero || '',
+        precio: JUEGO.precio,
+        imagen: JUEGO.imagen || ''
+    });
+ 
+    if (ok) {
+        Carrito.notificar('✓ ' + JUEGO.nombre + ' agregado al carrito', 'ok');
+        btn.innerHTML = '✓ Ya en tu carrito';
+    } else {
+        Carrito.notificar(JUEGO.nombre + ' ya está en tu carrito o biblioteca', 'aviso');
+        btn.disabled = false; btn.innerHTML = '🛒 Agregar al Carrito';
+    }
+}
+ 
+async function cerrarSesion(event) {
+    event.preventDefault();
+    await db.auth.logout();
+    window.location.href = 'home.html';
+}
+ 
+document.addEventListener('db-listo', async function() {
+    /* Sesión */
+    var haySesion = await db.auth.haySesion();
+    if (!haySesion) { window.location.href = 'login.html'; return; }
+ 
+    /* Nombre usuario */
+    var usuario = await db.auth.obtenerUsuario();
+    if (usuario) {
+        var nombre = usuario.nombre ? usuario.nombre : usuario.email.split('@')[0];
+        document.querySelectorAll('.usuario-nombre').forEach(function(el){
+            el.textContent = '👤 ' + nombre;
+        });
+    }
+ 
+    /* Obtener id de la URL */
+    var params  = new URLSearchParams(window.location.search);
+    var juegoId = params.get('id');
+    if (!juegoId) {
+        document.getElementById('estado-cargando').style.display = 'none';
+        document.getElementById('estado-error').style.display    = 'block';
+        return;
+    }
+ 
+    try {
+        var API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+            ? 'http://localhost:3000'
+            : 'https://j-back-darkbox.onrender.com';
+        var res  = await fetch(API_URL + '/api/juegos/' + encodeURIComponent(juegoId));
+        var data = await res.json();
+        if (data.ok && data.datos) {
+            mostrarJuego(data.datos);
+            /* Estado del botón */
+            var btn = document.getElementById('btn-compra');
+            if (await Biblioteca.contiene(juegoId)) {
+                btn.disabled = true; btn.innerHTML = '✓ Ya adquirido'; btn.style.opacity = '0.6';
+            } else if (await Carrito.contiene(juegoId)) {
+                btn.disabled = true; btn.innerHTML = '✓ Ya en tu carrito'; btn.style.opacity = '0.6';
+            }
+        } else {
+            document.getElementById('estado-cargando').style.display = 'none';
+            document.getElementById('estado-error').style.display    = 'block';
+        }
+    } catch(e) {
+        console.error('Error:', e);
+        document.getElementById('estado-cargando').style.display = 'none';
+        document.getElementById('estado-error').style.display    = 'block';
+    }
+});
+</script>
+<script src="volver.js"></script>
+<script src="buscador.js"></script>
+<script src="cookies.js"></script>
+</body>
+</html>

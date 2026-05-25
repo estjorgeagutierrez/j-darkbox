@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>DARKBOX — Darkwood</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="../styles.css">
+
+    
+    <link rel="stylesheet" href="../juego-single.css">
+</head>
+<body>
+
+
+
+
+
+
+
+<input type="radio" name="galeria" id="g1" checked>
+<input type="radio" name="galeria" id="g2">
+<input type="radio" name="galeria" id="g3">
+<input type="radio" name="galeria" id="g4">
+
+
+<input type="checkbox" id="toggle-req">
+
+
+
+<header class="header-sin-sesion">
+    <div class="contenedor">
+        <a href="../home.html" class="logo">DARKBOX</a>
+        <div class="buscador">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" placeholder="Buscar juegos...">
+        </div>
+        <a href="../login.html" class="btn-iniciar-sesion">Iniciar Sesión</a>
+        <label for="toggle-menu" class="hamburguesa">
+            <span></span><span></span><span></span>
+        </label>
+    </div>
+</header>
+
+
+
+
+
+<main>
+<div class="juego-pagina">
+<div class="contenedor">
+
+
+    
+    <a href="../home.html" class="btn-volver">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Volver
+    </a>
+
+
+    
+    <div class="juego-top">
+
+
+        
+        <div class="juego-galeria">
+
+            
+            <div class="galeria-grande">
+
+                <img class="slide slide-1"
+                     src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/274520/ss_212eaf1e681809dbdf30e139ad0a905d215680b5.1920x1080.jpg?t=1774608005"
+                     alt="Darkwood - n1">
+
+                <img class="slide slide-2"
+                     src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/274520/ss_5121475acc85704c69ccedb4f08749509ed3bc31.1920x1080.jpg?t=1774608005"
+                     alt="Darkwood - n2">
+
+                <img class="slide slide-3"
+                     src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/274520/ss_819f42429f0c7264e1884527cab58f70dee32b5a.1920x1080.jpg?t=1774608005"
+                     alt="Darkwood - n3">
+
+                <img class="slide slide-4"
+                     src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/274520/ss_eab8022640f69646966ff06182c5d1b9327d69d9.1920x1080.jpg?t=1774608005"
+                     alt="Darkwood - n4">
+
+            </div>
+
+
+            
+            <div class="galeria-thumbs">
+
+                <label for="g1" class="thumb">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/274520/ss_212eaf1e681809dbdf30e139ad0a905d215680b5.1920x1080.jpg?t=1774608005"
+                         alt="miniatura 1">
+                </label>
+
+                <label for="g2" class="thumb">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/274520/ss_5121475acc85704c69ccedb4f08749509ed3bc31.1920x1080.jpg?t=1774608005"
+                         alt="miniatura 2">
+                </label>
+
+                <label for="g3" class="thumb">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/274520/ss_819f42429f0c7264e1884527cab58f70dee32b5a.1920x1080.jpg?t=1774608005"
+                         alt="miniatura 3">
+                </label>
+
+                <label for="g4" class="thumb">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/274520/ss_eab8022640f69646966ff06182c5d1b9327d69d9.1920x1080.jpg?t=1774608005"
+                         alt="miniatura 4">
+                </label>
+
+            </div>
+
+        </div>
+
+
+        
+        <div class="juego-panel">
+
+            
+            <img class="juego-panel-img"
+                 src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/274520/18f5a6c6452d6292ebf9e4fcc199ce0759fb9a98/header.jpg?t=1774608005"
+                 alt="PEAK póster">
+
+            <div class="juego-panel-body">
+
+                
+                <p class="juego-panel-precio">$29.900</p>
+
+                
+                <a href="../login.html" class="juego-panel-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    Agregar al Carrito
+                </a>
+
+                
+                <hr class="juego-panel-sep">
+
+                
+                <div class="juego-panel-meta">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f59e0b" stroke="none" width="16" height="16">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    
+                    <span class="val">4.9</span>
+                    <span>/ 5.0</span>
+                </div>
+
+                
+                <div class="juego-panel-meta">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8"  y1="2" x2="8"  y2="6"/>
+                        <line x1="3"  y1="10" x2="21" y2="10"/>
+                    </svg>
+                    
+                    <span class="val">17 AGO 2017</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    
+    <div class="juego-bottom">
+
+        
+        <h1 class="juego-titulo">Darkwood</h1>
+
+        
+        <div class="juego-meta-fila">
+
+            
+            <span class="juego-badge-genero">Terror/Aventura</span>
+
+            
+            <span>Desarrollador: <strong>Acid Wizard Studio</strong></span>
+
+            
+            <span class="sep">•</span>
+
+            
+            <span>Editor: <strong>Hooded Horse, Acid Wizard Studio</strong></span>
+
+        </div>
+
+
+        
+        <div class="juego-seccion">
+            <h3>Acerca del Juego</h3>
+
+            
+            <p class="juego-descripcion-texto">
+                Darkwood ofrece una nueva perspectiva en el género survival horror.<br><br>
+
+Explora libremente durante el día un vasto mundo siempre cambiante, y luego atrinchérate en tu escondite al llegar la noche rezando para que llegue la luz de la mañana.<br><br>
+
+Survival horror aterrador con perspectiva descendente.<br>
+Sin ayudas ni marcadores de misión. ¡Pon a prueba tus habilidades y resuelve las cosas por tu cuenta!<br>
+Explora de día los bosques generados aleatoriamente, busca materiales, fabrica armas y descubre nuevos secretos.<br>
+Encuentra un refugio por la noche, construye barricadas, prepara trampas y ocúltate o defiéndete de los horrores que acechan en la oscuridad.<br>
+Consigue habilidades y beneficios extrayendo una extraña esencia de la fauna y flora mutada e inyectándola en tu torrente sanguíneo. Pero cuidado con las consecuencias inesperadas...<br>
+Toma decisiones que impactan en el mundo de Darkwood, en sus habitantes y en la historia que vives.<br>
+Encuentra a personajes inquietantes, conoce sus historias y decide sus destinos. Y recuerda, no confíes en nadie.<br>
+A medida que pasan las noches, las líneas entre la realidad y las fantasías de pesadilla comienzan a desdibujarse. ¿Estás listo para adentrarte en Darkwood?
+        </div>
+
+
+        
+        <div class="juego-seccion">
+            <h3>Características Principales</h3>
+
+            
+            <ul class="juego-caracteristicas">
+
+                <li>
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    
+                    Un jugador
+                </li>
+
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Subtìtulos disponibles
+                </li>
+
+
+
+            </ul>
+        </div>
+
+
+        
+        <div class="juego-seccion">
+            <h3>Requisitos del Sistema</h3>
+
+            
+            <div class="req-tabs">
+                <label for="toggle-req" class="req-tab req-label-minimos">Mínimos</label>
+                <label for="toggle-req" class="req-tab req-label-recomendados">Recomendados</label>
+            </div>
+
+
+            
+            <div class="req-minimos req-panel">
+
+                
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Sistema Operativo</span>
+                        
+                        <span class="req-valor">Windows Vista</span>
+                    </div>
+                </div>
+
+                
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                        <rect x="9" y="9" width="6" height="6"/>
+                        <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+                        <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+                        <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
+                        <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Procesador</span>
+                        
+                        <span class="req-valor">Intel Core 2 Duo 2.8Ghz or equivalent</span>
+                    </div>
+                </div>
+
+                
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="10" rx="2"/>
+                        <line x1="6" y1="7" x2="6" y2="3"/><line x1="10" y1="7" x2="10" y2="3"/>
+                        <line x1="14" y1="7" x2="14" y2="3"/><line x1="18" y1="7" x2="18" y2="3"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Memoria</span>
+                        
+                        <span class="req-valor">4 GB de RAM</span>
+                    </div>
+                </div>
+
+                
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="6" width="20" height="12" rx="2"/>
+                        <circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/>
+                        <line x1="6" y1="6" x2="6" y2="3"/><line x1="18" y1="6" x2="18" y2="3"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Gráficos</span>
+                        
+                        <span class="req-valor">GeForce 8800GT / ATI Radeon HD 4850</span>
+                    </div>
+                </div>
+
+                
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Almacenamiento</span>
+                        
+                        <span class="req-valor">6 GB de espacio disponible</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            
+            <div class="req-recomendados req-panel">
+
+                
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Sistema Operativo</span>
+                        
+                        <span class="req-valor">Windows 10 64-bit</span>
+                    </div>
+                </div>
+
+                
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                        <rect x="9" y="9" width="6" height="6"/>
+                        <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+                        <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+                        <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
+                        <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Procesador</span>
+                        
+                        <span class="req-valor">Intel i3</span>
+                    </div>
+                </div>
+
+                
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="10" rx="2"/>
+                        <line x1="6" y1="7" x2="6" y2="3"/><line x1="10" y1="7" x2="10" y2="3"/>
+                        <line x1="14" y1="7" x2="14" y2="3"/><line x1="18" y1="7" x2="18" y2="3"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Memoria</span>
+                        
+                        <span class="req-valor">6 GB de RAM</span>
+                    </div>
+                </div>
+
+                
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="6" width="20" height="12" rx="2"/>
+                        <circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/>
+                        <line x1="6" y1="6" x2="6" y2="3"/><line x1="18" y1="6" x2="18" y2="3"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Gráficos</span>
+                        
+                        <span class="req-valor">GeForce GTX 660</span>
+                    </div>
+                </div>
+
+                
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Almacenamiento</span>
+                        
+                        <span class="req-valor">6 GB de espacio disponible</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+</div>
+</main>
+
+
+
+<footer>
+    <div class="contenedor">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo-footer">DARKBOX</div>
+                <p class="footer-desc">Tu plataforma de confianza para juegos digitales. Los mejores títulos al mejor precio.</p>
+                <div class="redes">
+                    <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                    <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a>
+                    <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+                    <a href="#" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#101828"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="home.html">Inicio</a></li>
+                    <li><a href="#">Mi Biblioteca</a></li>
+                    <li><a href="#">Ofertas</a></li>
+                    <li><a href="#">Novedades</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                    <li><a href="#">Política de Reembolso</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <div class="contacto-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span id="footer-email"></span>
+                </div>
+                <div class="contacto-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.1 6.1l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <span>+1 (555) 123-4567</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Darkbox. Todos los derechos reservados. Plataforma de distribución digital de videojuegos.</p>
+        </div>
+    </div>
+</footer>
+
+
+<script>
+    document.getElementById('footer-email').textContent = 'soporte' + '@' + 'darkbox.com';
+</script>
+
+</body>
+</html>

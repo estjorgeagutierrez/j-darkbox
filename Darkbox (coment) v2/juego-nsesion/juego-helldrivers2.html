@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>DARKBOX — Helldivers 2</title>
+    <!--
+    ══════════════════════════════════════════════════════════════════
+    TÍTULO DE PESTAÑA
+    ══════════════════════════════════════════════════════════════════
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="../styles.css">
+
+    <!-- Estilos exclusivos de la página de detalle de juego -->
+    <link rel="stylesheet" href="../juego-single.css">
+</head>
+<body>
+
+
+
+
+<!-- Radios de la galería de imágenes:
+     Controlan cuál de las 4 imágenes grandes se muestra.
+     g1 checked = la primera imagen se ve al cargar la página.
+     Al hacer clic en una miniatura (label), se marca su radio
+     y el CSS muestra la imagen correspondiente. -->
+<input type="radio" name="galeria" id="g1" checked>
+<input type="radio" name="galeria" id="g2">
+<input type="radio" name="galeria" id="g3">
+<input type="radio" name="galeria" id="g4">
+
+<!-- Checkbox de pestañas de requisitos:
+     Sin marcar → panel "Mínimos" visible.
+     Marcado    → panel "Recomendados" visible.
+     Lo activan los labels dentro de .req-tabs más abajo. -->
+<input type="checkbox" id="toggle-req">
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     HEADER
+     ════════════════════════════════════════════════════════════════ -->
+<header class="header-sin-sesion">
+    <div class="contenedor">
+        <a href="../home.html" class="logo">DARKBOX</a>
+        <div class="buscador">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" placeholder="Buscar juegos...">
+        </div>
+        <a href="../login.html" class="btn-iniciar-sesion">Iniciar Sesión</a>
+        <label for="toggle-menu" class="hamburguesa">
+            <span></span><span></span><span></span>
+        </label>
+    </div>
+</header>
+
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     MAIN
+     ════════════════════════════════════════════════════════════════ -->
+<main>
+<div class="juego-pagina">
+<div class="contenedor">
+
+
+    <!-- Botón "Volver" -->
+    <a href="../home.html" class="btn-volver">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Volver
+    </a>
+
+
+    <!-- ════════════════════════════════════════════════════════════
+         ZONA SUPERIOR: galería de imágenes + panel lateral de compra
+         ════════════════════════════════════════════════════════════ -->
+    <div class="juego-top">
+
+
+        <!-- ── GALERÍA DE IMÁGENES ─────────────────────────────────
+             Cómo funciona:
+             1. Las 4 imágenes grandes están apiladas una encima de otra
+                (position: absolute en el CSS). Todas están invisibles
+                (opacity: 0) salvo la que corresponde al radio activo.
+             2. Las 4 miniaturas de abajo son labels. Al hacer clic en
+                una, se marca su radio (g1, g2, g3 o g4) y el CSS muestra
+                la imagen grande correspondiente.
+
+             ────────────────────────────────────────────────────────── -->
+        <div class="juego-galeria">
+
+            <!-- ─── IMÁGENES GRANDES ───────────────────────────────
+                 Estas 4 imágenes están apiladas. Solo se ve la del
+                 radio activo (g1 por defecto al cargar la página).
+
+                 Las clases son importantes y no deben cambiar:
+                 - "slide"   → regla base de posicionamiento
+                 - "slide-1" → activada cuando g1 está marcado
+                 - "slide-2" → activada cuando g2 está marcado
+                 - "slide-3" → activada cuando g3 está marcado
+                 - "slide-4" → activada cuando g4 está marcado -->
+            <div class="galeria-grande">
+
+                <img class="slide slide-1"
+                     src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_0c79f56fc7be1bd0102f2ca1c92c8f0900daf4fb.1920x1080.jpg?t=1770747641"
+                     alt="Helldivers 2 - n1">
+
+                <img class="slide slide-2"
+                     src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_8949ed7dd24a02d5ea13b08fc5c04fab400dc4bd.1920x1080.jpg?t=1770747641"
+                     alt="Helldivers 2 - n2">
+
+                <img class="slide slide-3"
+                     src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_3b08a991443164a65f84f1bd9f1363e6c2ec4581.1920x1080.jpg?t=1770747641"
+                     alt="Helldivers 2 - n3">
+
+                <img class="slide slide-4"
+                     src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_5dde7ea6922800dfece2a3a319cb68e4f6f67949.1920x1080.jpg?t=1770747641"
+                     alt="Helldivers 2 - n4">
+
+            </div><!-- fin galeria-grande -->
+
+
+            <!-- ─── MINIATURAS ─────────────────────────────────────
+                 Cada miniatura es un <label> que al hacer clic marca
+                 su radio correspondiente (for="g1", for="g2", etc.).
+                 El CSS detecta ese cambio y muestra la imagen grande.
+                 mismas URLs que las imágenes grandes. -->
+            <div class="galeria-thumbs">
+
+                <label for="g1" class="thumb">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_0c79f56fc7be1bd0102f2ca1c92c8f0900daf4fb.1920x1080.jpg?t=1770747641"
+                         alt="miniatura 1">
+                </label>
+
+                <label for="g2" class="thumb">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_8949ed7dd24a02d5ea13b08fc5c04fab400dc4bd.1920x1080.jpg?t=1770747641"
+                         alt="miniatura 2">
+                </label>
+
+                <label for="g3" class="thumb">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_3b08a991443164a65f84f1bd9f1363e6c2ec4581.1920x1080.jpg?t=1770747641"
+                         alt="miniatura 3">
+                </label>
+
+                <label for="g4" class="thumb">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_5dde7ea6922800dfece2a3a319cb68e4f6f67949.1920x1080.jpg?t=1770747641"
+                         alt="miniatura 4">
+                </label>
+
+            </div><!-- fin galeria-thumbs -->
+
+        </div><!-- fin juego-galeria -->
+
+
+        <!-- ── PANEL LATERAL DE COMPRA ─────────────────────────────
+             Panel fijo a la derecha. Contiene:
+             - Imagen póster del juego
+             - Precio
+             - Botón "Agregar al Carrito"
+             - Puntuación y fecha de lanzamiento
+
+             
+             ────────────────────────────────────────────────────────── -->
+        <div class="juego-panel">
+
+            <img class="juego-panel-img"
+                 src="data:image/jpeg;base64,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"
+                 alt="Helldivers 2 póster">
+
+            <div class="juego-panel-body">
+
+               
+                <p class="juego-panel-precio">$149.000</p>
+
+                <!-- Botón de compra -->
+                <a href="../login.html" class="juego-panel-btn">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    Agregar al Carrito
+                    
+                </a>
+
+                <!-- Línea separadora decorativa -->
+                <hr class="juego-panel-sep">
+
+                <!-- Fila de puntuación con estrella dorada -->
+                <div class="juego-panel-meta">
+                    <!-- Ícono estrella (color fijo en el SVG, no tocar) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f59e0b" stroke="none" width="16" height="16">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <!-- puntuación -->
+                    <span class="val">4.5</span>
+                    <span>/ 5.0</span>
+                </div>
+
+                <!-- Fila de fecha de lanzamiento con ícono calendario -->
+                <div class="juego-panel-meta">
+                    <!-- Ícono calendario (no tocar) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8"  y1="2" x2="8"  y2="6"/>
+                        <line x1="3"  y1="10" x2="21" y2="10"/>
+                    </svg>
+                    <!-- la fecha de lanzamiento -->
+                    <span class="val">8 FEB 2024</span>
+                </div>
+
+            </div><!-- fin juego-panel-body -->
+
+        </div><!-- fin juego-panel -->
+
+    </div><!-- fin juego-top -->
+
+
+    <!-- ════════════════════════════════════════════════════════════
+         ZONA INFERIOR: título, metadatos, descripción,
+         características y requisitos del sistema.
+         ════════════════════════════════════════════════════════════ -->
+    <div class="juego-bottom">
+
+       
+        <h1 class="juego-titulo">HELLDIVERS™ 2</h1>
+
+        <!-- Fila de metadatos: género, desarrollador y editor -->
+        <div class="juego-meta-fila">
+
+           
+            <span class="juego-badge-genero">JcE/Acción/Cooperativo en lìnea</span>
+
+            
+            <span>Desarrollador: <strong>Arrowhead Game Studios</strong></span>
+
+            <!-- Separador decorativo entre desarrollador y editor. No tocar. -->
+            <span class="sep">•</span>
+
+          
+            <span>Editor: <strong>PlayStation Publishing LLC</strong></span>
+
+        </div><!-- fin juego-meta-fila -->
+
+
+        <!-- ── SECCIÓN: Descripción ────────────────────────────────
+             Un bloque de texto que describe el juego.
+             ────────────────────────────────────────────────────────── -->
+        <div class="juego-seccion">
+            <h3>Acerca del Juego</h3>
+
+            
+            <p class="juego-descripcion-texto">
+                La última línea de ataque de la galaxia.<br><br>
+
+Alístate en los Helldivers y únete a la lucha por la libertad en una galaxia hostil en este juego de disparos en tercera persona rápido, frenético y feroz.<br><br>
+
+EMISIÓN URGENTE: FUERZAS ARMADAS DE SUPERTIERRA<br>
+Libertad. Paz. Democracia.<br>
+Como habitante de Supertierra, estos son tus derechos. Los pilares fundamentales de nuestra civilización.<br>
+De nuestra existencia.<br>
+Pero la guerra continúa. Y todo vuelve a estar amenazado.<br>
+Únete a la mejor fuerza militar de la galaxia y haz que este sea un lugar seguro y libre donde vivir.<br><br>
+
+CONVIÉRTETE EN LEYENDA<br>
+Te unirás a escuadrones de hasta cuatro Helldivers y se os asignarán misiones estratégicas.<br>
+Vigilaos las espaldas, porque, desgraciadamente, el fuego amigo es una certeza de la guerra, pero el trabajo en equipo es imprescindible para obtener la victoria.<br><br>
+
+ARSENALES<br>
+Haz que la libertad les llueva del cielo, infíltrate en territorio enemigo o aprieta bien los dientes y entra directamente al combate.<br>
+Tú eliges cómo les das la libertad; tendrás acceso a una amplia variedad de armas de fuego explosivas, armaduras capaces de salvarte la vida y estratagemas que cambiarán el curso de la batalla…, la joya del arsenal de todo Helldiver.<br><br>
+
+SOLICITUDES<br>
+Supertierra reconoce tu esfuerzo con valiosas Solicitudes. Utilízalas para acceder a diferentes recompensas que os beneficiarán a ti, a tu escuadrón, a tu destructor y a los esfuerzos de guerra en general.<br><br>
+
+AMENAZAS<br>
+Todo lo que hay en todos los planetas quiere acabar contigo. A esto nos enfrentamos.<br>
+Cada enemigo tiene características, tácticas y comportamientos diferentes e impredecibles, pero todos luchan con ferocidad y sin ningún miedo ni moralidad.<br><br>
+
+LA GUERRA GALÁCTICA<br>
+Capturar planetas enemigos, defender contra las invasiones y completar misiones contribuirá a los esfuerzos de guerra.<br>
+Ganar o perder esta guerra dependerá de las acciones de todas las personas involucradas.<br>
+O permanecemos unidos, o nos derrumbarán.
+            </p>
+        </div>
+
+
+        <!-- ── SECCIÓN: Características ───────────────────────────
+             Lista de puntos destacados del juego.
+             ────────────────────────────────────────────────────────── -->
+        <div class="juego-seccion">
+            <h3>Características Principales</h3>
+
+            
+            <ul class="juego-caracteristicas">
+
+                <li>
+                    <!-- Ícono check verde (igual en todos los ítems, no tocar) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                
+                    Cooperativo en linea
+                </li>
+
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Compras dentro de la aplicacion
+                </li>
+
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Mando Dualsense
+                </li>
+
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Utiliza antitrampas a nivel de kernel nProtect GameGuard
+                </li>
+
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Es necesario aceptar un ALUF de terceros HELLDIVERS™ 2 EULA
+                </li>
+
+            </ul>
+        </div>
+
+
+        <!-- ── SECCIÓN: Requisitos del Sistema ───────────────────
+             Dos paneles que se alternan: Mínimos y Recomendados.
+             El checkbox #toggle-req (arriba del header) controla cuál se ve.
+             Las etiquetas .req-label-minimos y .req-label-recomendados
+             actúan como botones que marcan/desmarcan ese checkbox.
+
+             Sin marcar → .req-minimos visible, .req-recomendados oculto.
+             Marcado    → .req-recomendados visible, .req-minimos oculto.
+             ────────────────────────────────────────────────────────── -->
+        <div class="juego-seccion">
+            <h3>Requisitos del Sistema</h3>
+
+            <!-- Pestañas: NO modificar las clases ni el for="toggle-req". -->
+            <div class="req-tabs">
+                <label for="toggle-req" class="req-tab req-label-minimos">Mínimos</label>
+                <label for="toggle-req" class="req-tab req-label-recomendados">Recomendados</label>
+            </div>
+
+
+            <!-- ─── PANEL MÍNIMOS ──────────────────────────────────
+                 Visible por defecto al cargar la página -->
+            <div class="req-minimos req-panel">
+
+                <!-- Sistema Operativo -->
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Sistema Operativo</span>
+                       
+                        <span class="req-valor">Windows 10</span>
+                    </div>
+                </div>
+
+                <!-- Procesador / CPU -->
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                        <rect x="9" y="9" width="6" height="6"/>
+                        <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+                        <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+                        <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
+                        <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Procesador</span>
+                        
+                        <span class="req-valor">Intel Core i7-4790K / AMD Ryzen 5 1500X</span>
+                    </div>
+                </div>
+
+                <!-- Memoria RAM -->
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="10" rx="2"/>
+                        <line x1="6" y1="7" x2="6" y2="3"/><line x1="10" y1="7" x2="10" y2="3"/>
+                        <line x1="14" y1="7" x2="14" y2="3"/><line x1="18" y1="7" x2="18" y2="3"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Memoria</span>
+                        
+                        <span class="req-valor">8 GB de RAM</span>
+                    </div>
+                </div>
+
+                <!-- Tarjeta gráfica / GPU -->
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="6" width="20" height="12" rx="2"/>
+                        <circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/>
+                        <line x1="6" y1="6" x2="6" y2="3"/><line x1="18" y1="6" x2="18" y2="3"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Gráficos</span>
+                        
+                        <span class="req-valor">NVIDIA GeForce GTX 1050 Ti / AMD Radeon RX 470</span>
+                    </div>
+                </div>
+
+                <!-- Almacenamiento -->
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Almacenamiento</span>
+                        
+                        <span class="req-valor">135 GB de espacio disponible</span>
+                    </div>
+                </div>
+
+            </div><!-- fin req-minimos -->
+
+
+            <!-- ─── PANEL RECOMENDADOS ─────────────────────────────
+                 Oculto por defecto. Se muestra al hacer clic en
+                 la pestaña "Recomendados" (que marca el checkbox).
+                  -->
+            <div class="req-recomendados req-panel">
+
+                <!-- Sistema Operativo -->
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Sistema Operativo</span>
+                       
+                        <span class="req-valor">Windows 10</span>
+                    </div>
+                </div>
+
+                <!-- Procesador / CPU -->
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                        <rect x="9" y="9" width="6" height="6"/>
+                        <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+                        <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+                        <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
+                        <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Procesador</span>
+                       
+                        <span class="req-valor">Intel Core i7-9700K / AMD Ryzen 7 3700X</span>
+                    </div>
+                </div>
+
+                <!-- Memoria RAM -->
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="10" rx="2"/>
+                        <line x1="6" y1="7" x2="6" y2="3"/><line x1="10" y1="7" x2="10" y2="3"/>
+                        <line x1="14" y1="7" x2="14" y2="3"/><line x1="18" y1="7" x2="18" y2="3"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Memoria</span>
+                        
+                        <span class="req-valor">16 GB de RAM</span>
+                    </div>
+                </div>
+
+                <!-- Tarjeta gráfica / GPU -->
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="6" width="20" height="12" rx="2"/>
+                        <circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/>
+                        <line x1="6" y1="6" x2="6" y2="3"/><line x1="18" y1="6" x2="18" y2="3"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Gráficos</span>
+                        
+                        <span class="req-valor">NVIDIA GeForce RTX 2060 / AMD Radeon RX 6600XT</span>
+                    </div>
+                </div>
+
+                <!-- Almacenamiento -->
+                <div class="req-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                    </svg>
+                    <div class="req-item-textos">
+                        <span class="req-label">Almacenamiento</span>
+                        
+                        <span class="req-valor">135 GB de espacio disponible SSD</span>
+                    </div>
+                </div>
+
+            </div><!-- fin req-recomendados -->
+
+        </div><!-- fin sección requisitos -->
+
+    </div><!-- fin juego-bottom -->
+
+
+</div><!-- fin contenedor -->
+</div><!-- fin juego-pagina -->
+</main>
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     FOOTER
+     Igual al de todas las páginas del sitio.
+     El único dato dinámico es el email, que se llena con JavaScript
+     para evitar que bots de spam lo raspen del HTML.
+     ════════════════════════════════════════════════════════════════ -->
+<footer>
+    <div class="contenedor">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo-footer">DARKBOX</div>
+                <p class="footer-desc">Tu plataforma de confianza para juegos digitales. Los mejores títulos al mejor precio.</p>
+                <div class="redes">
+                    <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                    <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a>
+                    <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+                    <a href="#" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#101828"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="home.html">Inicio</a></li>
+                    <li><a href="#">Mi Biblioteca</a></li>
+                    <li><a href="#">Ofertas</a></li>
+                    <li><a href="#">Novedades</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                    <li><a href="#">Política de Reembolso</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <div class="contacto-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span id="footer-email"></span>
+                </div>
+                <div class="contacto-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.1 6.1l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <span>+1 (555) 123-4567</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Darkbox. Todos los derechos reservados. Plataforma de distribución digital de videojuegos.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- El email se construye en partes para que los bots de spam no puedan
+     leerlo directamente del código fuente. No modificar la lógica. -->
+<script>
+    document.getElementById('footer-email').textContent = 'soporte' + '@' + 'darkbox.com';
+</script>
+
+</body>
+</html>

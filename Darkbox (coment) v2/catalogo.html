@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>DARKBOX — Catálogo de Juegos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="carrito.css">
+    <link rel="stylesheet" href="cookies.css">
+    <style>
+        .catalogo-pagina { padding-top:100px; padding-bottom:80px; min-height:100vh; }
+        .catalogo-cabecera { margin-bottom:32px; }
+        .catalogo-titulo { font-family:"Inter",sans-serif; font-weight:900; font-size:clamp(1.8rem,3vw,2.4rem); color:white; margin:0 0 8px 0; }
+        .catalogo-subtitulo { font-family:"Inter",sans-serif; font-size:1rem; color:#8888aa; margin:0; }
+        .catalogo-lista { display:flex; flex-direction:column; gap:16px; }
+        .catalogo-item {
+            display:flex; align-items:center; gap:20px;
+            background:#151d2e; border:1px solid rgba(255,255,255,0.07);
+            border-radius:12px; padding:16px 20px;
+            transition:border-color 0.25s,transform 0.2s;
+            animation:fadeIn 0.25s ease;
+            text-decoration:none; color:inherit;
+        }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+        .catalogo-item:hover { border-color:rgba(168,85,247,0.4); transform:translateY(-2px); }
+        .catalogo-img { width:110px; aspect-ratio:16/9; object-fit:cover; border-radius:8px; flex-shrink:0; background:#0a0f1e; }
+        .catalogo-info { flex:1; }
+        .catalogo-nombre { font-family:"Inter",sans-serif; font-weight:700; font-size:1rem; color:white; margin:0 0 4px; }
+        .catalogo-genero { font-family:"Inter",sans-serif; font-size:0.85rem; color:#8888aa; margin:0 0 8px; }
+        .catalogo-precio { font-family:"Inter",sans-serif; font-weight:700; font-size:1rem; color:#22c55e; margin:0; }
+        .catalogo-badge { font-size:0.75rem; background:rgba(168,85,247,0.2); color:#c084fc; padding:2px 8px; border-radius:10px; margin-left:8px; }
+        .btn-catalogo-agregar {
+            background:linear-gradient(90deg,#7c3aed,#E60076); border:none; color:white;
+            font-family:"Inter",sans-serif; font-size:0.9rem; font-weight:600;
+            padding:10px 20px; border-radius:8px; cursor:pointer; white-space:nowrap;
+            flex-shrink:0; transition:opacity 0.2s,transform 0.15s;
+        }
+        .btn-catalogo-agregar:hover { opacity:0.85; transform:translateY(-1px); }
+        .btn-catalogo-agregar:disabled { background:rgba(255,255,255,0.1); cursor:not-allowed; opacity:0.6; transform:none; }
+        .catalogo-estado { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:60px 20px; background:#151d2e; border:1px solid rgba(255,255,255,0.07); border-radius:12px; color:#8888aa; font-family:"Inter",sans-serif; text-align:center; }
+        .catalogo-estado p { margin:0; font-size:1rem; font-weight:600; }
+        .spinner { width:36px; height:36px; border:3px solid rgba(168,85,247,0.2); border-top-color:#a855f7; border-radius:50%; animation:spin 0.8s linear infinite; }
+        @keyframes spin { to{transform:rotate(360deg)} }
+        .filtros { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+        .filtro-btn { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); color:#aaaacc; font-family:"Inter",sans-serif; font-size:0.85rem; font-weight:600; padding:6px 16px; border-radius:20px; cursor:pointer; transition:all 0.2s; }
+        .filtro-btn:hover, .filtro-btn.activo { background:rgba(168,85,247,0.2); border-color:#a855f7; color:white; }
+        @media(max-width:900px){
+            .catalogo-img { width:90px; }
+        }
+        @media(max-width:600px){
+            /* Tarjeta en móvil: imagen arriba, info abajo */
+            .catalogo-item {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 14px 14px;
+            }
+            .catalogo-img {
+                width: 100%;
+                aspect-ratio: 16/9;
+                border-radius: 8px;
+            }
+            .catalogo-info { flex: 1 1 100%; }
+            .catalogo-nombre { font-size: 0.95rem; }
+            /* Botones en fila completa */
+            .catalogo-item > div:last-child {
+                width: 100%;
+                display: flex;
+                gap: 8px;
+            }
+            .catalogo-item > div:last-child .btn-catalogo-agregar,
+            .catalogo-item > div:last-child a {
+                flex: 1;
+                text-align: center;
+                justify-content: center;
+                padding: 10px 8px;
+                font-size: 0.85rem;
+            }
+            /* Filtros en scroll horizontal */
+            .filtros {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 4px;
+                -webkit-overflow-scrolling: touch;
+            }
+            .filtro-btn { flex-shrink: 0; }
+            /* Badge "Nuevo" debajo del nombre en móvil */
+            .catalogo-badge { display: block; margin: 4px 0 0; width: fit-content; }
+        }
+    </style>
+</head>
+<body>
+<input type="checkbox" id="toggle-menu">
+<header>
+    <div class="contenedor">
+        <a href="home-sesion.html" class="logo">DARKBOX</a>
+        <div class="buscador">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="buscador-input" placeholder="Buscar juegos...">
+        </div>
+        <nav>
+            <button onclick="window.location.href='biblioteca.html'">📊 Biblioteca</button>
+            <button class="btn-carrito-header" onclick="window.location.href='carrito.html'">
+                🛒 Carrito
+                <span id="carrito-badge" class="carrito-badge" style="display:none;">0</span>
+            </button>
+            <span class="usuario-nombre">👤 Usuario</span>
+            <a id="btn-admin-nav" href="admin.html" style="display:none;background:rgba(168,85,247,0.2);border:1px solid rgba(168,85,247,0.4);color:#c084fc;padding:8px 14px;border-radius:8px;font-family:Inter,sans-serif;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;transition:background 0.2s;" onmouseover="this.style.background='rgba(168,85,247,0.35)'" onmouseout="this.style.background='rgba(168,85,247,0.2)'">🛡️ Admin</a>
+            <a href="#" onclick="cerrarSesion(event)" class="btn-salir">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </a>
+        </nav>
+        <label for="toggle-menu" class="hamburguesa"><span></span><span></span><span></span></label>
+    </div>
+</header>
+<div class="menu-movil">
+    <button onclick="window.location.href='biblioteca.html'">📊 Biblioteca</button>
+    <button onclick="window.location.href='carrito.html'">🛒 Carrito</button>
+    <span class="usuario-nombre">👤 Usuario</span>
+    <a href="#" onclick="cerrarSesion(event)" class="btn-salir-movil">↪ Salir</a>
+</div>
+
+<main>
+<div class="catalogo-pagina">
+<div class="contenedor">
+    <div class="catalogo-cabecera">
+        <h1 class="catalogo-titulo">Catálogo Completo</h1>
+        <p class="catalogo-subtitulo" id="catalogo-subtitulo">Cargando juegos...</p>
+    </div>
+    <div class="filtros" id="filtros-zona"></div>
+    <div class="catalogo-lista" id="catalogo-lista">
+        <div class="catalogo-estado"><div class="spinner"></div><p>Cargando catálogo...</p></div>
+    </div>
+</div>
+</div>
+</main>
+
+<footer>
+    <div class="contenedor">
+        <div class="footer-grid">
+            <div class="footer-col"><div class="logo-footer">DARKBOX</div><p class="footer-desc">Tu plataforma de confianza para juegos digitales.</p></div>
+            <div class="footer-col"><h4>Enlaces</h4><ul><li><a href="home-sesion.html">Inicio</a></li><li><a href="biblioteca.html">Mi Biblioteca</a></li><li><a href="carrito.html">Carrito</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Darkbox. Todos los derechos reservados.</p></div>
+    </div>
+</footer>
+
+<script src="supabase.js"></script>
+<script src="carrito.js"></script>
+<script>
+/* ── JUEGOS ESTÁTICOS (los que ya existen en el home) ────────────────
+   Se muestran siempre. Los juegos de la BD se agregan encima. */
+var JUEGOS_ESTATICOS = [
+  {id:"helldrivers2",nombre:"HELLDIVERS™ 2",precio:149000,imagen:"https://a.storyblok.com/f/178900/768x432/1c7b91c44a/helldivers-2.jpg/m/filters:quality(95)format(webp)",genero:"JcE/Acción/Cooperativo en línea",href:"juego-ssesion/juego-s-helldrivers2.html"},
+  {id:"resident-evil-3",nombre:"Resident Evil 3",precio:121800,imagen:"https://imagenes.hobbyconsolas.com/files/image_640_360/uploads/imagenes/2023/04/25/690227fe3b5ba.jpeg",genero:"Acción/Aventura/Zombie",href:"juego-ssesion/juego-s-resident-evil-3.html"},
+  {id:"terraria",nombre:"Terraria",precio:26000,imagen:"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/105600/capsule_616x353.jpg?t=1769844435",genero:"Sandbox/Supervivencia mundo abierto",href:"juego-ssesion/juego-s-terraria.html"},
+  {id:"mortal-kombat-11",nombre:"Mortal Kombat 11",precio:143999,imagen:"https://i0.wp.com/nerfeados.com/wp-content/uploads/2019/05/MK11_Portada.jpg?fit=1024%2C576&ssl=1",genero:"Lucha/Sangrientos/Multijugador",href:"juego-ssesion/juego-s-mortal-kombat-11.html"},
+  {id:"peak",nombre:"PEAK",precio:19000,imagen:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0oVEeG-Npltjzsc_XvP0d2D1O3BvZlBX_5Q&s",genero:"Multijugador/Cooperativo",href:"juego-ssesion/juego-s-peak.html"},
+  {id:"deep-rock-galactic",nombre:"Deep Rock Galactic",precio:53000,imagen:"https://www.zonammorpg.com/wp-content/uploads/2020/04/deeprockgalacticpic04-1620x800.jpg",genero:"Aventura/Cooperativo/FPS",href:"juego-ssesion/juego-s-deep-rock-galactic.html"},
+  {id:"darkwood",nombre:"Darkwood",precio:29900,imagen:"https://image.api.playstation.com/vulcan/ap/rnd/202206/2011/zvvEqRTkLYJlNEKLz4hjwbGz.jpg",genero:"Terror/Aventura",href:"juego-ssesion/juego-s-darkwood.html"},
+  {id:"doom-eternal",nombre:"DOOM Eternal",precio:120000,imagen:"https://orgullogamers.com/wp-content/uploads/2020/05/doometernal.webp",genero:"FPS/Accion/Sangrientos",href:"juego-ssesion/juego-s-doom-eternal.html"},
+  {id:"hunt-showdown-1896",nombre:"Hunt: Showdown 1896",precio:94000,imagen:"https://www.zonammorpg.com/wp-content/uploads/2024/08/huntshowdown1896-1620x800.jpg",genero:"Acción/Shooter",href:"juego-ssesion/juego-s-hunt-showdown-1896.html"},
+  {id:"death-stranding",nombre:"DEATH STRANDING DIRECTOR'S CUT",precio:129900,imagen:"https://cdn1.epicgames.com/offer/0a9e3c5ab6684506bd624a849ca0cf39/EGS_DeathStrandingDirectorsCut_KOJIMAPRODUCTIONS_S3_2560x1440-fe4e51f1801fba36e452aa3466625789",genero:"Buena trama/Mundo abierto",href:"juego-ssesion/juego-s-death-stranding.html"},
+  {id:"astroner",nombre:"ASTRONEER",precio:70000,imagen:"https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000037336/27b7c212e9900ebbf3fba4c6cb0d0d137e7d0be05f86ab5a954bb7d161e7fb64",genero:"Multijugador/Espacial",href:"juego-ssesion/juego-s-astroner.html"},
+  {id:"palworld",nombre:"Palworld",precio:70000,imagen:"https://phantom.estaticos-marca.com/9be94779ed15ddbde4016330d68fb500/resize/828/f/jpg/assets/multimedia/imagenes/2024/01/10/17048900622330.jpg",genero:"Aventura/Exploración",href:"juego-ssesion/juego-s-palworld.html"},
+  {id:"stalker-2",nombre:"S.T.A.L.K.E.R. 2: Heart of Chornobyl",precio:198900,imagen:"https://locosxlosjuegos.com/wp-content/uploads/2026/01/S.T.A.L.K.E.R.-Heart-of-Chernobyl-Portada.jpg",genero:"FPS/Posapocaliptico",href:"juego-ssesion/juego-s-stalker-2.html"},
+  {id:"the-long-dark",nombre:"The Long Dark",precio:81000,imagen:"https://cdn1.epicgames.com/58dfcd1952ee48c1a1fa31c6ace5fe3d/offer/EGS_TheLongDark_HinterlandStudioInc_S5-1920x1080-fcfdd407ac1990bec320b49101862585.jpg",genero:"Supervivencia",href:"juego-ssesion/juego-s-the-long-dark.html"},
+  {id:"rdr-2",nombre:"Red Dead Redemption 2",precio:239999,imagen:"https://sm.ign.com/ign_latam/screenshot/default/rdr2_29y8.jpg",genero:"Mundo abierto/Buena trama",href:"juego-ssesion/juego-s-rdr-2.html"},
+  {id:"outlast",nombre:"The Outlast Trials",precio:86000,imagen:"https://media.vandal.net/m/80035/the-outlast-trials-2022103118301040_9.jpg",genero:"Terror/Multijugador",href:"juego-ssesion/juego-s-outlast.html"},
+  {id:"madness",nombre:"MADNESS: Project Nexus",precio:33500,imagen:"https://static.wikia.nocookie.net/madnesscombat/images/2/26/ProjectNexus.jpg/revision/latest?cb=20221024203408&path-prefix=es",genero:"Hack and slash",href:"juego-ssesion/juego-s-madness.html"},
+  {id:"ultrakill",nombre:"ULTRAKILL",precio:58800,imagen:"https://i.3djuegos.com/juegos/17573/fotos/ficha/-5268516.jpg",genero:"FPS/Sangre/Retro",href:"juego-ssesion/juego-s-ultrakill.html"},
+  {id:"brawlhalla",nombre:"Brawlhalla",precio:0,imagen:"https://cdn.aptoide.com/imgs/8/4/a/84aaa60ac0a211285722dfc7bffb134a_fgraphic.jpg",genero:"Lucha/Multijugador",href:"juego-ssesion/juego-s-brawlhalla.html"},
+  {id:"ball-x-pit",nombre:"BALL x PIT",precio:37500,imagen:"https://cdn.dlcompare.com/others_jpg/upload/news/image/ball-x-pit-is-expanding-with-new-541a4ac8-image-704004ab4.jpg.webp",genero:"Arcade/Roguelite",href:"juego-ssesion/juego-s-ball-x-pit.html"},
+  {id:"borderlands-3",nombre:"Borderlands 3",precio:169900,imagen:"https://i.blogs.es/juegos/11199/borderlands_3/fotos/noticias/borderlands_3-4855853.jpg",genero:"Rol/Disparos y botín",href:"juego-ssesion/juego-s-borderlands-3.html"},
+  {id:"dying-light",nombre:"Dying Light: The Beast Restored Land",precio:199900,imagen:"https://www.zonammorpg.com/wp-content/uploads/2026/03/Dying-Light-The-Beast-Restored-Land-key-visual.jpg",genero:"Zombie/Mundo abierto",href:"juego-ssesion/juego-s-dying-light.html"},
+  {id:"look-outside",nombre:"Look Outside",precio:26000,imagen:"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3373660/770f4d1538b590421beba1e1217d9e6a8411fde9/header_alt_assets_2.jpg",genero:"Rol/Pixelados/Terror",href:"juego-ssesion/juego-s-look-outside.html"},
+  {id:"lethal-company",nombre:"Lethal Company",precio:26000,imagen:"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1966720/capsule_616x353.jpg?t=1762544438",genero:"Cooperativo/Terror",href:"juego-ssesion/juego-s-lethal-company.html"},
+  {id:"cloverpit",nombre:"CloverPit",precio:26000,imagen:"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3314790/e6955b668c667da7b5019f481707f69b4fb814b5/capsule_616x353.jpg?t=1773337831",genero:"Apuestas/Roguelite",href:"juego-ssesion/juego-s-cloverpit.html"},
+  {id:"crysol",nombre:"Crisol: Theater of Idols",precio:43500,imagen:"https://periodismo.ull.es/wp-content/uploads/2026/02/WhatsApp-Image-2026-02-03-at-11.07.32.jpeg",genero:"Terror/FPS",href:"juego-ssesion/juego-s-crysol.html"}
+];
+
+var todosLosJuegos = [];
+var filtroActual   = 'todos';
+
+function formatearPrecio(n) {
+    if (n === 0) return 'GRATIS';
+    return '$' + Number(n).toLocaleString('es-CO');
+}
+
+/* ── CONSTRUIR LISTA COMBINADA ────────────────────────────────────
+   Primero van los juegos de la BD (nuevos), luego los estáticos.
+   Si un juego de la BD tiene el mismo id que uno estático, el estático
+   mantiene su href a la página dedicada. */
+function combinarJuegos(juegosBD) {
+    var idsEstaticos = JUEGOS_ESTATICOS.map(function(j){ return j.id; });
+    var nuevos = juegosBD.filter(function(j){ return !idsEstaticos.includes(j.id); });
+    // Los nuevos van al frente con href dinámico
+    var nuevosConHref = nuevos.map(function(j){
+        return Object.assign({}, j, { href: 'juego-dinamico.html?id=' + j.id, esNuevo: true });
+    });
+    return nuevosConHref.concat(JUEGOS_ESTATICOS);
+}
+
+/* ── RENDERIZAR ── */
+function renderizarJuegos(juegos) {
+    var zona = document.getElementById('catalogo-lista');
+    var sub  = document.getElementById('catalogo-subtitulo');
+
+    if (!juegos || juegos.length === 0) {
+        zona.innerHTML = '<div class="catalogo-estado"><p>No hay juegos para mostrar.</p></div>';
+        sub.textContent = '0 juegos';
+        return;
+    }
+
+    sub.textContent = juegos.length + ' juego' + (juegos.length !== 1 ? 's' : '') + ' disponible' + (juegos.length !== 1 ? 's' : '');
+
+    zona.innerHTML = juegos.map(function(j) {
+        var precioStr = formatearPrecio(j.precio);
+        var badgeNuevo = j.esNuevo ? '<span class="catalogo-badge">✨ Nuevo</span>' : '';
+        return [
+            '<div class="catalogo-item" style="cursor:default">',
+            '  <img src="' + (j.imagen||'') + '" alt="' + j.nombre + '" class="catalogo-img" onerror="this.style.background=\'#1a2540\'">',
+            '  <div class="catalogo-info">',
+            '    <p class="catalogo-nombre">' + j.nombre + badgeNuevo + '</p>',
+            '    <p class="catalogo-genero">' + (j.genero||'') + '</p>',
+            '    <p class="catalogo-precio">' + precioStr + '</p>',
+            '  </div>',
+            '  <div style="display:flex;gap:8px;align-items:center;flex-shrink:0;">',
+            '    <button class="btn-catalogo-agregar" id="btn-cat-' + j.id + '" onclick="agregarJuego(\'' + j.id + '\',event)">🛒 Agregar</button>',
+            '    <a href="' + j.href + '" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:white;font-family:Inter,sans-serif;font-size:0.85rem;font-weight:600;padding:9px 14px;border-radius:8px;text-decoration:none;white-space:nowrap;transition:background 0.2s;" onmouseover="this.style.background=\'rgba(255,255,255,0.14)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.08)\'">Ver detalles</a>',
+            '  </div>',
+            '</div>'
+        ].join('\n');
+    }).join('\n');
+}
+
+/* ── FILTROS ── */
+function construirFiltros(juegos) {
+    var generos = ['todos'];
+    juegos.forEach(function(j){
+        var g = (j.genero || '').split('/')[0].trim();
+        if (g && !generos.includes(g)) generos.push(g);
+    });
+    var zona = document.getElementById('filtros-zona');
+    zona.innerHTML = generos.slice(0,8).map(function(g){
+        return '<button class="filtro-btn' + (g==='todos'?' activo':'') + '" onclick="aplicarFiltro(\'' + g + '\',this)">' + (g==='todos'?'Todos':g) + '</button>';
+    }).join('');
+}
+
+function aplicarFiltro(genero, btn) {
+    filtroActual = genero;
+    document.querySelectorAll('.filtro-btn').forEach(function(b){ b.classList.remove('activo'); });
+    btn.classList.add('activo');
+    var filtrados = genero === 'todos' ? todosLosJuegos : todosLosJuegos.filter(function(j){
+        return (j.genero||'').toLowerCase().includes(genero.toLowerCase());
+    });
+    renderizarJuegos(filtrados);
+    marcarEstados();
+}
+
+/* ── AGREGAR AL CARRITO ── */
+async function agregarJuego(juegoId, event) {
+    event.preventDefault();
+    event.stopPropagation();
+    var juego = todosLosJuegos.find(function(j){ return j.id === juegoId; });
+    if (!juego) return;
+    var btn = document.getElementById('btn-cat-' + juegoId);
+    if (btn) {
+        if (btn.disabled) return;   /* evitar doble clic */
+        btn.disabled=true; btn.textContent='Agregando...';
+    }
+    var ok = await Carrito.agregar({ id:juego.id, nombre:juego.nombre, genero:juego.genero||'', precio:juego.precio, imagen:juego.imagen||'' });
+    if (ok) {
+        Carrito.notificar('✓ ' + juego.nombre + ' agregado al carrito', 'ok');
+        if (btn) { btn.textContent='✓ En carrito'; }
+    } else {
+        Carrito.notificar(juego.nombre + ' ya está en tu carrito o biblioteca', 'aviso');
+        if (btn) { btn.disabled=false; btn.textContent='🛒 Agregar'; }
+    }
+}
+
+/* ── MARCAR ESTADOS (en carrito / adquirido) ── */
+async function marcarEstados() {
+    var enCarrito    = await db.carrito.obtener();
+    var enBiblioteca = await db.biblioteca.obtener();
+    var idsC = enCarrito.map(function(j){ return j.juego_id||j.id; });
+    var idsB = enBiblioteca.map(function(j){ return j.juego_id||j.id; });
+    todosLosJuegos.forEach(function(j){
+        var btn = document.getElementById('btn-cat-' + j.id);
+        if (!btn) return;
+        if (idsB.includes(j.id)) { btn.disabled=true; btn.textContent='✓ Ya adquirido'; }
+        else if (idsC.includes(j.id)) { btn.disabled=true; btn.textContent='✓ En carrito'; }
+    });
+}
+
+/* ── BUSCADOR ── */
+document.getElementById('buscador-input').addEventListener('input', function() {
+    var q = this.value.trim().toLowerCase();
+    var base = filtroActual === 'todos' ? todosLosJuegos : todosLosJuegos.filter(function(j){ return (j.genero||'').toLowerCase().includes(filtroActual.toLowerCase()); });
+    if (!q) { renderizarJuegos(base); marcarEstados(); return; }
+    var filtrados = base.filter(function(j){ return j.nombre.toLowerCase().includes(q) || (j.genero||'').toLowerCase().includes(q); });
+    renderizarJuegos(filtrados);
+    marcarEstados();
+});
+
+async function cerrarSesion(event) {
+    event.preventDefault();
+    await db.auth.logout();
+    window.location.href = 'home.html';
+}
+
+/* ── INICIALIZAR ── */
+document.addEventListener('db-listo', async function() {
+    var haySesion = await db.auth.haySesion();
+    if (!haySesion) { window.location.href = 'login.html'; return; }
+
+    var usuario = await db.auth.obtenerUsuario();
+    if (usuario) {
+        var nombre = usuario.nombre ? usuario.nombre : usuario.email.split('@')[0];
+        document.querySelectorAll('.usuario-nombre').forEach(function(el){ el.textContent = '👤 ' + nombre; });
+    }
+
+    /* Cargar juegos nuevos de la BD y combinar con los estáticos */
+    try {
+        var API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+            ? 'http://localhost:3000'
+            : 'https://j-back-darkbox.onrender.com';
+        var res  = await fetch(API_URL + '/api/juegos');
+        var data = await res.json();
+        todosLosJuegos = data.ok ? combinarJuegos(data.datos) : JUEGOS_ESTATICOS.slice();
+    } catch(e) {
+        todosLosJuegos = JUEGOS_ESTATICOS.slice();
+    }
+
+    construirFiltros(todosLosJuegos);
+    renderizarJuegos(todosLosJuegos);
+    await marcarEstados();
+});
+</script>
+<script src="buscador.js"></script>
+<script src="cookies.js"></script>
+</body>
+</html>

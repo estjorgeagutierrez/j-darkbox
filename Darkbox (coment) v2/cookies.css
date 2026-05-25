@@ -1,0 +1,165 @@
+/* ══════════════════════════════════════════════════
+   DARKBOX — cookies.css
+   Estilos del banner de consentimiento de cookies.
+   Se carga en todas las páginas junto con styles.css.
+   ══════════════════════════════════════════════════ */
+
+/* ── OVERLAY (fondo semitransparente detrás del banner) ── */
+.cookies-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.cookies-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ── BANNER ── */
+.cookies-banner {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    width: calc(100% - 48px);
+    max-width: 680px;
+    background: #151d2e;
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    border-radius: 16px;
+    padding: 28px 32px;
+    z-index: 10001;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+    opacity: 0;
+}
+
+.cookies-banner.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* ── CABECERA DEL BANNER ── */
+.cookies-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.cookies-icono {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+}
+
+.cookies-titulo {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: white;
+    margin: 0;
+}
+
+/* ── TEXTO DEL BANNER ── */
+.cookies-texto {
+    font-family: "Inter", sans-serif;
+    font-size: 0.88rem;
+    color: #aaaacc;
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+}
+
+.cookies-texto a {
+    color: #a855f7;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.cookies-texto a:hover {
+    text-decoration: underline;
+}
+
+/* ── BOTONES ── */
+.cookies-botones {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Botón Aceptar — morado degradado */
+.btn-cookies-aceptar {
+    flex: 1;
+    min-width: 140px;
+    background: linear-gradient(90deg, #7c3aed, #E60076);
+    border: none;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.btn-cookies-aceptar:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+/* Botón Rechazar — gris oscuro */
+.btn-cookies-rechazar {
+    flex: 1;
+    min-width: 140px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #aaaacc;
+    font-family: "Inter", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-cookies-rechazar:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* ── NOTA DE PREFERENCIAS ── */
+.cookies-nota {
+    font-family: "Inter", sans-serif;
+    font-size: 0.78rem;
+    color: #666688;
+    margin-top: 14px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 600px) {
+    .cookies-banner {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 16px 16px 0 0;
+        transform: translateX(0) translateY(100%);
+        padding: 24px 20px;
+    }
+
+    .cookies-banner.visible {
+        transform: translateX(0) translateY(0);
+    }
+
+    .cookies-botones {
+        flex-direction: column;
+    }
+}

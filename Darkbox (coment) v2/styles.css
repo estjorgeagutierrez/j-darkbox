@@ -1,0 +1,1019 @@
+/* ══════════════════════════════════════════════════
+   DARKBOX — styles.css
+   Archivo de estilos de toda la página.
+   ══════════════════════════════════════════════════ */
+ 
+ 
+/* ── ESTILOS BASE ── */
+
+html { font-family: "Rajdhani", sans-serif; }
+ 
+
+body {
+    margin: 0;
+    background-color: #101828; /* color de fondo oscuro de toda la página */
+    color: white;              /* color de texto por defecto: blanco */
+}
+ 
+ 
+/* ── CONTENEDOR DE 12 COLUMNAS ── */
+.contenedor {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+ 
+ 
+/* ══════════════════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════════════════ */
+ 
+header {
+    position: fixed;   /* FIJO: el header no se mueve aunque el usuario haga scroll.
+                          Siempre permanece en la parte superior de la pantalla. */
+    top: 0;            /* pegado al borde superior */
+    left: 0;           /* pegado al borde izquierdo */
+    right: 0;          /* pegado al borde derecho (se estira todo el ancho) */
+    height: 70px;      /* altura del header */
+    z-index: 999;      /* z-index controla qué elemento queda encima de otros.
+                          999 asegura que el header esté por encima de todo el contenido. */
+}
+ 
+/* El .contenedor dentro del header organiza logo, buscador y nav en fila */
+header .contenedor {
+    height: 100%;          /* ocupa toda la altura del header (70px) */
+    display: flex;         /* FLEX: organiza los hijos en fila horizontal */
+    align-items: center;   /* centra los elementos verticalmente */
+    gap: 24px;             /* espacio entre logo, buscador y nav */
+}
+ 
+/* ::before es un elemento vacío que se crea antes del contenido del header.
+   se usa para el fondo porque el header tiene max-width (limitado),
+   pero el fondo debe cubrir TODA la pantalla de lado a lado.
+   Al usar position:fixed aquí también, el fondo se extiende sin límites. */
+header::before {
+    content: "";       /* necesario para que ::before exista aunque esté vacío */
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 70px;
+    /* Degradado horizontal: oscuro → morado → oscuro */
+    background: linear-gradient(90deg, #101828, #59168B, #101828);
+    /* Linea sutil color purpura en la parte inferior del header */
+    border-bottom: 1px solid rgba(168, 85, 247, 0.4);
+    z-index: -1;       /* detrás del contenido del header */
+}
+ 
+ 
+/* ── LOGO ── */
+ 
+header .logo {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;          /* Inter Black: el grosor más pesado disponible */
+    font-size: 1.6rem;         /* rem es relativo al tamaño de fuente base del html */
+    text-decoration: none;     /* elimina el subrayado que tienen los enlaces por defecto */
+    white-space: nowrap;       /* evita que el texto se parta en dos líneas */
+    letter-spacing: 0.04em;    /* pequeño espaciado entre letras */
+    /* Degradado de color aplicado al texto:
+       Funciona en 3 pasos: primero se pone el degradado como fondo,
+       luego se recorta ese fondo en la forma del texto (background-clip),
+       luego se hace el texto transparente para que se vea el fondo degradado. */
+    background: linear-gradient(135deg, #C27AFF, #E60076);
+    -webkit-background-clip: text;        /* recorta el fondo con la forma del texto */
+    -webkit-text-fill-color: transparent; /* hace el texto transparente */
+}
+ 
+ 
+/* ── BUSCADOR ── */
+ 
+header .buscador {
+    flex: 1;           /* flex:1 hace que ocupe todo el espacio libre disponible
+                          entre el logo y el nav, estirándose según la pantalla */
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.07);   /* blanco muy transparente como fondo */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* borde sutil */
+    border-radius: 8px; /* esquinas redondeadas */
+}
+ 
+/* El SVG de la lupa */
+header .buscador svg {
+    width: 18px; height: 18px;
+    color: #8888aa;        
+    margin-left: 14px;     /* espacio desde el borde izquierdo del buscador */
+    flex-shrink: 0;        /* evita que el ícono se encoja si hay poco espacio */
+}
+ 
+/* El campo de texto donde el usuario escribe */
+header .buscador input {
+    flex: 1;               /* ocupa el resto del espacio dentro del buscador */
+    padding: 10px 14px;    /* espacio interno: 10px arriba/abajo, 14px a los lados */
+    background: transparent; /* sin fondo propio, hereda el del div padre */
+    border: none;          /* sin borde propio */
+    color: white;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1rem;
+    outline: none;         /* elimina el borde azul que el navegador pone al hacer clic */
+}
+ 
+/* El texto que aparece en gris cuando el input está vacío */
+header .buscador input::placeholder { color: #8888aa; }
+ 
+/* :focus-within aplica cuando CUALQUIER hijo del div tiene el foco.
+   En este caso, cuando el usuario hace clic en el input de texto,
+   el div padre (.buscador) recibe estos estilos. */
+header .buscador:focus-within {
+    border-color: #a855f7;              /* borde se vuelve morado */
+    background: rgba(255,255,255,0.1);  /* fondo ligeramente más claro */
+}
+ 
+ 
+/* ── NAV (botones de la derecha) ── */
+ 
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto; /* "auto" en margin-left empuja el nav al extremo derecho.
+                           para alinear */
+    white-space: nowrap; /* evita que los botones se partan en varias líneas */
+}
+ 
+/* Estilo base para todos los botones del nav */
+header nav button {
+    background: transparent; /* sin fondo */
+    border: none;
+    color: #d4d4e8;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;   /* cambia el cursor a una mano al pasar por encima */
+    /* transition anima los cambios de background y color suavemente en 0.2 segundos */
+    transition: background 0.2s ease, color 0.2s ease;
+}
+ 
+/* Al pasar el mouse encima de los botones */
+header nav button:hover { background: rgba(168, 85, 247, 0.2); color: white; }
+ 
+/* "Usuario": es un span, no un botón.
+   El color gris indica que no es clickeable. */
+header nav span { color: #8888aa; font-size: 1.05rem; font-weight: 600; padding: 8px 14px; }
+ 
+/* Botón salir: menos padding porque solo tiene ícono, sin texto */
+header nav .btn-salir { padding: 8px 10px; color: #8888aa; }
+ 
+/* display:block en el svg evita un pequeño espacio extra que los navegadores
+   agregan debajo de los elementos inline como los svg */
+header nav .btn-salir svg { width: 18px; height: 18px; display: block; }
+ 
+/* Hover del botón salir: se vuelve rosado para indicar que es una acción importante */
+header nav .btn-salir:hover { background: rgba(230, 0, 118, 0.15); color: #E60076; }
+ 
+ 
+/* ── INPUTS INVISIBLES (interruptores) ──────────────
+   position:absolute saca los inputs del flujo del documento:
+   no ocupan espacio, no empujan otros elementos, y lo más
+   importante: NO causan scroll cuando el navegador los "activa".
+   Si usáramos display:none, al marcar un radio el navegador
+   haría scroll hasta su posición, pareciendo una recarga.
+   Con opacity:0 y width/height:0 son completamente invisibles
+   pero siguen funcionando como interruptores para el CSS. */
+#toggle-menu,
+input[name="carrusel"],
+input[name="ofertas"],
+input[name="actualizados"] {
+    position: absolute;    /* fuera del flujo normal del documento */
+    opacity: 0;            /* completamente invisible */
+    pointer-events: none;  /* no puede recibir clics directamente */
+    width: 0; height: 0;   /* sin dimensiones */
+}
+ 
+ 
+/* ── HAMBURGUESA (menú móvil) ── */
+ 
+header .hamburguesa {
+    display: none;     /* oculto por defecto. Se muestra solo en celular
+                          mediante la media query de max-width: 600px */
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;          /* espacio entre las tres líneas */
+    width: 38px; height: 38px;
+    padding: 6px;
+    margin-left: auto; /* empuja la hamburguesa a la derecha cuando el nav está oculto */
+    border-radius: 6px;
+    cursor: pointer;
+}
+ 
+header .hamburguesa:hover { background: rgba(168, 85, 247, 0.2); }
+ 
+/* Cada línea de la hamburguesa ☰ */
+header .hamburguesa span {
+    display: block;        /* block para que ocupe su propia línea */
+    height: 2px;           /* grosor de cada línea */
+    background: #d4d4e8;
+    border-radius: 2px;
+}
+ 
+ 
+/* ── MENÚ MÓVIL ── */
+ 
+.menu-movil {
+    display: none;     /* oculto por defecto */
+    position: fixed;   /* fijo, flota sobre el contenido */
+    top: 70px;         /* justo debajo del header (que mide 70px) */
+    left: 0; right: 0;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 20px 20px;
+    background: linear-gradient(180deg, #1a0f38, #101828);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+    z-index: 998;      /* debajo del header (999) pero encima del contenido */
+}
+ 
+/* El selector ~ significa "hermano siguiente en el mismo nivel".
+   #toggle-menu:checked detecta cuando el checkbox está marcado.
+   ~ .menu-movil encuentra el div hermano y le aplica display:flex.
+   Esto funciona porque ambos están al mismo nivel dentro del body. */
+#toggle-menu:checked ~ .menu-movil { display: flex; }
+ 
+/* Botones dentro del menú móvil */
+.menu-movil button {
+    background: transparent;
+    border: none;
+    color: #d4d4e8;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 12px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;  /* texto alineado a la izquierda como lista vertical */
+    transition: background 0.2s ease;
+}
+ 
+.menu-movil button:hover { background: rgba(168, 85, 247, 0.2); color: white; }
+.menu-movil span { color: #8888aa; font-size: 1.1rem; font-weight: 600; padding: 12px 14px; }
+.menu-movil .btn-salir-movil:hover { background: rgba(230, 0, 118, 0.15); color: #E60076; }
+ 
+ 
+/* ══════════════════════════════════════════════════
+   HERO (banner de bienvenida)
+   ══════════════════════════════════════════════════ */
+ 
+.hero {
+    margin-top: 70px;  /* empuja el hero hacia abajo para que no quede
+                          tapado por el header fijo de 70px de altura */
+    min-height: 480px; /* altura mínima: si el contenido es más alto, crece */
+    display: flex;
+    align-items: flex-end; /* el contenido (texto) se posiciona en la parte inferior */
+ 
+    /* Múltiples fondos apilados, se renderizan de adelante hacia atrás:
+       1. Oscurece la izquierda para que el texto sea legible
+       2. Oscurece arriba y abajo para integrarse con el fondo de la página
+       3. El color de fondo morado-rojo como base */
+    background:
+        linear-gradient(90deg, #101828 25%, transparent 65%),
+        linear-gradient(180deg, #101828 0%, transparent 20%, transparent 70%, #101828 100%),
+        linear-gradient(135deg, #59168B 0%, #8B1650 40%, #8B3A16 70%, #5C1616 100%);
+ 
+    position: relative; /* necesario para que ::before se posicione dentro del hero */
+    overflow: hidden;   /* evita que la cuadrícula ::before se salga del recuadro */
+}
+ 
+/* Cuadrícula decorativa de fondo (simula la imagen del diseño original).
+   Se crea con dos gradientes lineales cruzados de 1px de grosor. */
+.hero::before {
+    content: "";
+    position: absolute; /* se posiciona relativo al .hero (que tiene position:relative) */
+    top: 0; left: 0; right: 0; bottom: 0; /* cubre todo el hero */
+    background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),  /* líneas horizontales */
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); /* líneas verticales */
+    background-size: 60px 60px; /* tamaño de cada celda de la cuadrícula */
+}
+ 
+/* El .contenedor dentro del hero necesita position:relative para aparecer
+   encima de la cuadrícula ::before que tiene position:absolute */
+.hero .contenedor {
+    position: relative;
+    width: 100%;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+ 
+/* H1: título principal de la página */
+.hero h1 {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    /* clamp(mínimo, preferido, máximo): el tamaño se adapta al ancho de la pantalla.
+       Nunca será menor a 2rem ni mayor a 3.2rem. */
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    margin: 0;
+    color: white;
+    line-height: 1.1; /* espacio entre líneas del título (1.1 × el tamaño de fuente) */
+    max-width: 520px;  /* limita el ancho para que no se estire demasiado */
+}
+ 
+/* El span dentro del h1 permite darle color diferente solo a "DARKBOX"
+   usando el mismo truco de degradado que el logo */
+.hero h1 span {
+    display: block; /* lo pone en su propia línea */
+    background: linear-gradient(135deg, #C27AFF, #E60076);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+ 
+/* Párrafo descriptivo: Inter Regular (400), blanco semitransparente */
+.hero p {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;  /* Regular, el grosor normal */
+    font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+    color: rgba(255, 255, 255, 0.7); /* blanco al 70% de opacidad */
+    margin: 16px 0 0 0; /* solo margen arriba (16px) para separarlo del h1 */
+    line-height: 1.7;   /* espacio generoso entre líneas para legibilidad */
+    max-width: 420px;
+}
+ 
+
+.tarjeta-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+ 
+/* ══════════════════════════════════════════════════
+   ENCABEZADO DE SECCIÓN
+   Compartido entre juegos del momento, ofertas,
+   mejor valorados y actualizados recientemente.
+   ══════════════════════════════════════════════════ */
+ 
+.seccion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* título a la izquierda, flechas a la derecha */
+    margin-bottom: 28px;
+}
+ 
+.seccion-header h2 {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    margin: 0;
+    color: white;
+}
+ 
+/* Contenedor de las dos flechas */
+.flechas { display: flex; gap: 8px; }
+ 
+/* Estilo base de cada flecha (son labels, no botones).
+   display:none por defecto: el CSS activa solo las 2 correctas
+   según qué radio esté marcado en ese momento. */
+.flecha {
+    display: none;     /* ocultas por defecto */
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    color: #8888aa;
+    font-size: 1.4rem;
+    cursor: pointer;
+    user-select: none; /* evita que el símbolo ‹ › se seleccione accidentalmente al hacer clic */
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+ 
+/* Hover de las flechas: se iluminan */
+.flecha:hover { background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.4); }
+ 
+ 
+/* ══════════════════════════════════════════════════
+   GRUPOS DE TARJETAS
+   Cada grupo es una "página" completa de tarjetas.
+   Se usan en las secciones con paginación.
+   ══════════════════════════════════════════════════ */
+ 
+.grupo {
+    display: grid;
+    /* repeat(4, 1fr): crea 4 columnas que se reparten el espacio equitativamente.
+       1fr significa "1 fracción del espacio disponible". */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px; /* espacio entre las tarjetas */
+    /* animation: el grupo aparece con una pequeña entrada deslizante.
+       Esto le da sensación de movimiento al cambiar de página. */
+    animation: entrar 0.35s ease;
+}
+ 
+/* Definición de la animación "entrar":
+   from: estado inicial (invisible y desplazado 24px a la derecha)
+   to: estado final (visible y en su posición normal) */
+@keyframes entrar {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+ 
+ 
+/* ══════════════════════════════════════════════════
+   TARJETA DE JUEGO
+   Se reutiliza en todas las secciones de juegos.
+   ══════════════════════════════════════════════════ */
+ 
+.tarjeta {
+    background: #1a2236;   /* fondo oscuro azulado */
+    border-radius: 10px;   /* esquinas redondeadas */
+    /* Borde casi invisible por defecto, se vuelve morado al hacer hover */
+    border: 1px solid rgba(255,255,255,0.07);
+    overflow: hidden;      /* el zoom de la imagen no se sale de los bordes redondeados */
+    cursor: pointer;
+    /* Transición para borde, elevación y sombra en hover */
+    transition: border-color 0.3s ease,
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+}
+ 
+/* ── HOVER DE TARJETA: elevación sutil ──────────────────────────
+   Se reemplazó el zoom de la imagen por una elevación de la tarjeta.
+   translateY(-4px): mueve la tarjeta 4px hacia arriba ("se levanta").
+   box-shadow: sombra morada sutil que refuerza la sensación de profundidad.
+   La transición está definida en .tarjeta (border-color, transform, box-shadow). */
+.tarjeta:hover {
+    border-color: #a855f7;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(168, 85, 247, 0.18);
+}
+ 
+/* Contenedor de la imagen con altura fija para uniformidad.
+   position:relative es necesario para que el .badge
+   (porcentaje de descuento) se posicione dentro de él. */
+.tarjeta .imagen {
+    height: 200px;
+    overflow: hidden;  /* el zoom no se sale del contenedor */
+    position: relative;
+}
+ 
+/* ── IMAGEN DEL JUEGO ──────────────────────────
+   Para cambiar por imagen real en el futuro:
+   reemplaza el atributo src del <img> por la ruta de tu imagen.
+   Ejemplo: <img src="img/nombre-del-juego.jpg" alt="Nombre del juego">
+   ─────────────────────────────────────────────── */
+.tarjeta .imagen img {
+    width: 100%;
+    height: 100%;
+    /* object-fit:cover hace que la imagen cubra todo el espacio
+       sin deformarse, recortando los bordes si es necesario */
+    object-fit: cover;
+    display: block;    /* evita el espacio extra que los navegadores ponen bajo imágenes inline */
+    /* Transición de transform eliminada: ya no hay zoom en la imagen */
+}
+ 
+/* ZOOM ELIMINADO: antes la imagen hacía scale(1.08) en hover.
+   Se quitó porque el efecto de zoom se veía genérico.
+   El efecto de interacción ahora lo hace la elevación de la tarjeta
+   y la expansión de la descripción. */
+/* .tarjeta:hover .imagen img { transform: scale(1.08); } */
+ 
+/* Badge de descuento: se posiciona en la esquina superior derecha de la imagen.
+   Funciona porque .imagen tiene position:relative y el badge tiene position:absolute. */
+.tarjeta .badge {
+    position: absolute; /* se posiciona relativo al contenedor más cercano con position:relative */
+    top: 12px; right: 12px;
+    background: #dc2626;  /* rojo */
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+ 
+/* Bloque de información de la tarjeta */
+.tarjeta .info { padding: 16px; }
+ 
+/* ── DATOS DEL JUEGO ───────────────────────────
+   Para cambiar la info de un juego en el futuro,
+   edita el contenido de estas clases en el HTML:
+   .nombre → nombre del juego
+   .puntuacion → número con la calificación
+   .genero → categoría del juego
+   .descripcion → texto descriptivo corto
+   .precio → precio con símbolo de dólar
+   ─────────────────────────────────────────────── */
+ 
+/* Nombre del juego: Inter Black */
+.tarjeta .nombre {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    color: white;
+    margin: 0 0 6px 0; /* solo margen inferior */
+}
+ 
+/* Fila con estrella, puntuación y género */
+.tarjeta .meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 0.9rem;
+    color: #8888aa;
+    margin-bottom: 10px;
+}
+ 
+.tarjeta .meta .estrella   { color: #f59e0b; }  /* amarillo para la estrella */
+.tarjeta .meta .puntuacion { color: white; font-weight: 600; }
+.tarjeta .meta .separador  { color: rgba(255,255,255,0.2); } /* punto separador tenue */
+ 
+/* ── DESCRIPCIÓN: 2 líneas en reposo, texto completo en hover ──
+   Cómo funciona la expansión:
+
+   Estado normal (sin hover):
+   - -webkit-line-clamp:2 recorta visualmente a 2 líneas con "..."
+   - max-height se calcula así:
+       font-size(0.92rem) × line-height(1.5) × 2 líneas = 2.76rem
+       Se usa 3em como margen de seguridad para evitar cortes.
+   - overflow:hidden oculta el texto que sobra.
+
+   Estado hover (.tarjeta:hover .descripcion más abajo):
+   - -webkit-line-clamp se anula (unset) → el texto se muestra completo.
+   - max-height sube a 200px, suficiente para cualquier descripción.
+   - La transición de max-height anima el cambio suavemente.
+     (No se puede animar height:auto en CSS, por eso se usa max-height.)
+
+   Por qué el valor base es 3em y no 2.76em:
+   Algunos navegadores añaden pequeños decimales al calcular la altura
+   de línea real. 3em da un margen que evita que se corte la segunda
+   línea por milímetros. */
+.tarjeta .descripcion {
+    font-family: "Rajdhani", sans-serif;
+    font-size: 0.92rem;
+    color: #8888aa;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+
+    /* Recorte a 2 líneas en estado normal */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    /* max-height permite animar la expansión en hover.
+       3em ≈ 2 líneas con margen de seguridad. */
+    max-height: 3em;
+
+    /* Anima la expansión (max-height) y el cambio de color */
+    transition: max-height 0.4s ease, color 0.25s ease;
+}
+
+/* En hover: descripción completamente visible */
+.tarjeta:hover .descripcion {
+    /* Quitar el recorte de líneas */
+    -webkit-line-clamp: unset;
+    /* Expandir hasta cubrir cualquier descripción larga del catálogo */
+    max-height: 200px;
+    /* Texto ligeramente más claro para indicar que es legible */
+    color: #c0c0d8;
+}
+ 
+/* Fila inferior: precio a la izquierda, botón a la derecha */
+.tarjeta .pie {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* separa precio y botón a los extremos */
+}
+ 
+/* Precio en verde */
+.tarjeta .precio {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: #22c55e;
+}
+ 
+/* Precio "GRATIS": misma estructura que .precio pero verde más brillante.
+   !important sobreescribe el color verde oscuro del .precio base. */
+.precio-gratis { color: #4ade80 !important; }
+ 
+/* Precio original tachado (solo en ofertas con descuento).
+   text-decoration:line-through dibuja una línea encima del texto
+   para indicar que ese precio ya no aplica. */
+.tarjeta .precio-original {
+    font-family: "Rajdhani", sans-serif;
+    font-size: 0.9rem;
+    color: #8888aa;
+    text-decoration: line-through;
+    margin-right: 6px;
+}
+ 
+/* Botón "Agregar al carrito" */
+.tarjeta .btn-agregar {
+    background: #7c3aed;  /* morado sólido */
+    border: none;
+    color: white;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+ 
+/* Al hacer hover: se oscurece y sube 2px (efecto de "levantarse") */
+.tarjeta .btn-agregar:hover { background: #6d28d9; transform: translateY(-2px); }
+ 
+/* Al hacer clic: vuelve a su posición */
+.tarjeta .btn-agregar:active { transform: translateY(0); }
+ 
+ 
+/* ══════════════════════════════════════════════════
+   LÓGICA DE SECCIONES CON PAGINACIÓN
+   Cada sección usa radios + grupos para mostrar
+   4 tarjetas a la vez con flechas de navegacion.
+ 
+   COMO FUNCIONA:
+   1. Los radios estan justo antes de su sección en el HTML.
+   2. Las flechas son labels vinculados a los radios.
+   3. Al hacer clic en una flecha, el radio cambia de estado.
+   4. El CSS detecta el radio activo con :checked y
+      muestra/oculta los grupos y flechas correspondientes.
+   5. El selector ~ (hermano siguiente) conecta el radio
+      con su sección: solo funciona si están al mismo nivel.
+   ══════════════════════════════════════════════════ */
+ 
+ 
+/* ── JUEGOS DEL MOMENTO ── */
+ 
+.juegos-momento { padding: 60px 0; }
+ 
+/* grupo-2 oculto por defecto: solo se ve la primera página */
+.juegos-momento .grupo-2 { display: none; }
+ 
+/* Cuando slide-2 está marcado: oculta grupo-1 y muestra grupo-2 */
+#slide-2:checked ~ .juegos-momento .grupo-1 { display: none; }
+#slide-2:checked ~ .juegos-momento .grupo-2 { display: grid; }
+ 
+/* Flechas de juegos del momento:
+   En slide-1 activo: muestra izq (loop a slide-2) y der (avanza a slide-2)
+   En slide-2 activo: muestra izq (retrocede a slide-1) y der (loop a slide-1) */
+#slide-1:checked ~ .juegos-momento .izq-desde-1 { display: flex; }
+#slide-1:checked ~ .juegos-momento .der-desde-1 { display: flex; }
+#slide-2:checked ~ .juegos-momento .izq-desde-2 { display: flex; }
+#slide-2:checked ~ .juegos-momento .der-desde-2 { display: flex; }
+ 
+ 
+/* ── OFERTAS ESPECIALES ──
+   Misma lógica exacta que juegos del momento.
+   Usa sus propias clases (oferta-grupo-X, oferta-izq/der-desde-X)
+   y su propio radio (name="ofertas") para no interferir con otras secciones. */
+ 
+.ofertas { padding: 60px 0; }
+ 
+.ofertas .oferta-grupo-2 { display: none; }
+ 
+#oferta-2:checked ~ .ofertas .oferta-grupo-1 { display: none; }
+#oferta-2:checked ~ .ofertas .oferta-grupo-2 { display: grid; }
+ 
+#oferta-1:checked ~ .ofertas .oferta-izq-desde-1 { display: flex; }
+#oferta-1:checked ~ .ofertas .oferta-der-desde-1 { display: flex; }
+#oferta-2:checked ~ .ofertas .oferta-izq-desde-2 { display: flex; }
+#oferta-2:checked ~ .ofertas .oferta-der-desde-2 { display: flex; }
+ 
+ 
+/* ── MEJOR VALORADOS ──
+   Sin radios ni lógica de paginación: es una sola página fija.
+   Usa .grid en vez de .grupo porque tiene 3 columnas, no 4. */
+ 
+.mejor-valorados { padding: 60px 0; }
+ 
+/* Grid de 3 columnas y 2 filas (6 tarjetas en total) */
+.mejor-valorados .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 28px;
+}
+ 
+/* Las tarjetas de esta sección son más altas: sobreescribe el height:200px base */
+.mejor-valorados .tarjeta .imagen { height: 260px; }
+ 
+ 
+/* ── ACTUALIZADOS RECIENTEMENTE ──
+   Misma lógica que juegos del momento y ofertas. */
+ 
+.actualizados { padding: 60px 0; }
+ 
+.actualizados .grupo-2 { display: none; }
+ 
+#actual-2:checked ~ .actualizados .grupo-1 { display: none; }
+#actual-2:checked ~ .actualizados .grupo-2 { display: grid; }
+ 
+#actual-1:checked ~ .actualizados .actual-izq-desde-1 { display: flex; }
+#actual-1:checked ~ .actualizados .actual-der-desde-1 { display: flex; }
+#actual-2:checked ~ .actualizados .actual-izq-desde-2 { display: flex; }
+#actual-2:checked ~ .actualizados .actual-der-desde-2 { display: flex; }
+ 
+ 
+/* ══════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════ */
+ 
+footer {
+    border-top: 1px solid #AD46FF; /* línea superior morada brillante */
+    /* Degradado vertical: de #101828 (arriba) a #000000 (abajo) */
+    background: linear-gradient(180deg, #101828, #000000);
+    margin-top: 40px; /* espacio entre el contenido y el footer */
+}
+ 
+/* Grid de 4 columnas para las secciones del footer */
+footer .footer-grid {
+    display: grid;
+    /* 1.5fr: la primera columna (logo) es 50% más ancha que las otras.
+       Las columnas restantes tienen 1fr cada una. */
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: 40px;
+    padding: 60px 0 40px; /* espacio arriba: 60px, abajo: 40px */
+}
+ 
+/* Logo del footer: mismo degradado que el del header */
+footer .logo-footer {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, #C27AFF, #E60076);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block; /* necesario para que el degradado funcione */
+    margin-bottom: 14px;
+}
+ 
+/* Descripción debajo del logo */
+footer .footer-desc {
+    font-family: "Rajdhani", sans-serif;
+    font-size: 0.95rem;
+    color: #8888aa;
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+    max-width: 220px;
+}
+ 
+/* Fila de íconos de redes sociales */
+footer .redes { display: flex; gap: 10px; }
+ 
+/* Cada ícono: círculo con borde que al hover se ilumina de morado */
+footer .redes a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px; height: 34px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;    /* 50% hace que el div sea un círculo perfecto */
+    color: #8888aa;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+ 
+/* Hover: el círculo se bordea de morado y el ícono cambia de color */
+footer .redes a:hover {
+    border-color: #a855f7;
+    color: #a855f7;
+    background: rgba(168, 85, 247, 0.1);
+}
+ 
+/* Tamaño del SVG dentro de cada círculo social */
+footer .redes a svg { width: 14px; height: 14px; }
+ 
+/* Títulos de cada columna del footer */
+footer .footer-col h4 {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    color: white;
+    margin: 0 0 18px 0;
+}
+ 
+/* Lista de enlaces: quitamos los estilos por defecto de las listas */
+footer .footer-col ul {
+    list-style: none; /* elimina los puntos/números de la lista */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+ 
+/* Cada enlace del footer */
+footer .footer-col ul a {
+    font-family: "Rajdhani", sans-serif;
+    font-size: 0.95rem;
+    color: #8888aa;
+    text-decoration: none; /* sin subrayado por defecto */
+    transition: color 0.2s ease;
+    cursor: pointer; /* cursor de mano para indicar que es un enlace */
+}
+ 
+/* Al hacer hover: el texto se vuelve morado, simulando un enlace activo */
+footer .footer-col ul a:hover { color: #a855f7; }
+ 
+/* Cada ítem de contacto: ícono + texto en fila */
+footer .footer-col .contacto-item {
+    display: flex;
+    align-items: flex-start; /* alineados arriba para textos de varias líneas */
+    gap: 10px;
+    margin-bottom: 12px;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 0.95rem;
+    color: #8888aa;
+    line-height: 1.5;
+}
+ 
+/* SVG de cada ícono de contacto */
+footer .footer-col .contacto-item svg {
+    width: 16px; height: 16px;
+    flex-shrink: 0;    /* evita que el ícono se encoja si el texto es largo */
+    margin-top: 2px;   /* pequeño ajuste vertical para alinearlo con el texto */
+    color: #a855f7;    /* morado para los íconos de contacto */
+}
+ 
+/* Línea separadora y área del copyright */
+footer .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.07); /* línea muy sutil */
+    padding: 24px 0;
+    text-align: center;
+}
+ 
+footer .footer-bottom p {
+    font-family: "Rajdhani", sans-serif;
+    font-size: 0.9rem;
+    color: #8888aa;
+    margin: 0;
+}
+ 
+ 
+/* ══════════════════════════════════════════════════
+   RESPONSIVE (Media Queries)
+   Las media queries son bloques CSS que solo se activan
+   cuando la pantalla cumple cierta condición de ancho.
+   Se escriben AL FINAL para que sobreescriban los
+   estilos de arriba cuando corresponda.
+   ══════════════════════════════════════════════════ */
+ 
+/* ── TABLET: pantallas entre 601px y 900px ── */
+@media (max-width: 900px) {
+    .contenedor { padding: 0 24px; }    /* menos padding lateral */
+    header nav button { padding: 8px 8px; } /* botones más compactos */
+    header nav span { display: none; }  /* ocultamos "Usuario" para ahorrar espacio */
+    .hero { min-height: 380px; }
+    /* 2 columnas en las secciones con grid de 4 */
+    .grupo { grid-template-columns: repeat(2, 1fr); }
+    /* 2 columnas en mejor valorados (que tiene grid de 3) */
+    .mejor-valorados .grid { grid-template-columns: repeat(2, 1fr); }
+    /* 2 columnas en el footer */
+    footer .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; padding: 40px 0 30px; }
+}
+ 
+/* ── CELULAR: pantallas menores a 600px ── */
+@media (max-width: 600px) {
+    .contenedor { padding: 0 16px; }   /* padding mínimo */
+    header nav { display: none; }      /* ocultamos el nav completo */
+    header .hamburguesa { display: flex; } /* mostramos la hamburguesa (sesión iniciada) */
+    header .logo { font-size: 1.3rem; }
+
+    /* ── HEADER SIN SESIÓN en celular ──────────────────────────────
+       La clase .header-sin-sesion se pone solo en home.html y en los
+       juegos sin sesión (juegos-nsesion/). En esas páginas no hay menú
+       hamburguesa — solo logo + botón "Iniciar Sesión", como en el login.
+       En home-sesion.html y juegos-ssesion/ NO se pone esta clase,
+       así que la hamburguesa sigue funcionando normal. */
+    header.header-sin-sesion .buscador    { display: none; }
+    header.header-sin-sesion .hamburguesa { display: none; }
+    header.header-sin-sesion .btn-iniciar-sesion {
+        padding: 9px 16px;
+        font-size: 0.9rem;
+    }
+    .hero { min-height: 320px; }
+    /* En celular el degradado oscuro cubre más para que el texto sea legible */
+    .hero {
+        background:
+            linear-gradient(90deg, #101828 60%, transparent 100%),
+            linear-gradient(180deg, #101828 0%, transparent 20%, transparent 70%, #101828 100%),
+            linear-gradient(135deg, #59168B 0%, #8B1650 40%, #8B3A16 70%, #5C1616 100%);
+    }
+    /* 1 columna en celular para todas las secciones */
+    .grupo { grid-template-columns: 1fr; }
+    .mejor-valorados .grid { grid-template-columns: 1fr; }
+    .juegos-momento { padding: 40px 0; }
+    .ofertas { padding: 40px 0; }
+    .actualizados { padding: 40px 0; }
+    .mejor-valorados { padding: 40px 0; }
+    /* 1 columna en el footer */
+    footer .footer-grid { grid-template-columns: 1fr; gap: 28px; padding: 32px 0 24px; }
+}
+ 
+/* En pantallas mayores a 600px el menú móvil siempre oculto.
+   !important asegura que esta regla gane sobre el #toggle-menu:checked ~ .menu-movil */
+@media (min-width: 601px) {
+    .menu-movil { display: none !important; }
+}
+ 
+ 
+/* ── BOTÓN INICIAR SESIÓN (home sin sesión) ──────────
+   Es un enlace <a> estilizado como botón con degradado.
+   Se usa en el header del home sin sesión. */
+header .btn-iniciar-sesion {
+    margin-left: auto;
+    background: linear-gradient(90deg, #7c3aed, #E60076);
+    border: none;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;    /* quitamos el subrayado del enlace */
+    display: inline-flex;
+    align-items: center;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+}
+ 
+header .btn-iniciar-sesion:hover { opacity: 0.85; transform: translateY(-1px); }
+ 
+/* ── BOTÓN SALIR COMO ENLACE ──
+   El btn-salir ahora es un <a> en home-sesion.html.
+   Le damos los mismos estilos que tenía como button. */
+header nav a.btn-salir {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    color: #8888aa;
+    border-radius: 6px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+ 
+header nav a.btn-salir svg { width: 18px; height: 18px; display: block; }
+header nav a.btn-salir:hover { background: rgba(230, 0, 118, 0.15); color: #E60076; }
+ 
+/* ── BOTÓN LOGIN EN MENÚ MÓVIL ── */
+.menu-movil .btn-movil-login {
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(90deg, #7c3aed, #E60076);
+    padding: 12px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    text-align: center;
+    transition: opacity 0.2s ease;
+}
+ 
+.btn-nav-text {
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;        /* quita el subrayado */
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-nav-text:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+}
+
+.menu-movil .btn-movil-login:hover { opacity: 0.85; }
+/* ── FIX BUSCADOR MÓVIL ─────────────────────────────────────────────
+   En móvil: logo + buscador compacto + hamburguesa en fila.
+   El nav (botones de escritorio) se oculta. */
+@media (max-width: 600px) {
+    header nav {
+        display: none !important;
+    }
+    header .hamburguesa {
+        display: flex !important;
+        flex-shrink: 0;
+        margin-left: 0;
+    }
+    header .contenedor {
+        gap: 10px;
+    }
+    header .buscador {
+        flex: 1;
+        min-width: 0;
+        max-width: 180px;
+    }
+    header .logo {
+        flex-shrink: 0;
+    }
+}

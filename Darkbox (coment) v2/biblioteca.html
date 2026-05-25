@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>DARKBOX — Mi Biblioteca</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+    <!-- styles.css: estilos globales del sitio (header, footer, contenedor...) -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="carrito.css">
+
+    <!-- biblioteca.css: estilos exclusivos de esta página -->
+    <link rel="stylesheet" href="biblioteca.css">
+    <link rel="stylesheet" href="cookies.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     INTERRUPTOR MENÚ MÓVIL
+     Debe estar antes del header para que el selector
+     CSS ~ pueda alcanzar el .menu-movil.
+     ════════════════════════════════════════════════ -->
+<input type="checkbox" id="toggle-menu">
+
+<!-- Skip link de accesibilidad -->
+<a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+
+<!-- ════════════════════════════════════════════════
+     HEADER — versión CON sesión (igual que home-sesion)
+     ════════════════════════════════════════════════ -->
+<header>
+    <div class="contenedor">
+        <a href="home-sesion.html" class="logo">DARKBOX</a>
+
+        <div class="buscador" role="search">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" placeholder="Buscar juegos..." aria-label="Buscar juegos en el catálogo">
+        </div>
+
+        <nav>
+            <!-- El botón Biblioteca lleva a esta misma página (activo) -->
+            <button class="btn-nav-text" onclick="window.location.href='biblioteca.html'">📊 Biblioteca</button>
+
+            <!-- Botón carrito con badge.
+                 carrito.js actualiza el número al cargar. -->
+            <button class="btn-carrito-header" onclick="window.location.href='carrito.html'">
+                🛒 Carrito
+                <span id="carrito-badge" class="carrito-badge" style="display:none;">0</span>
+            </button>
+
+            <span class="usuario-nombre">👤 Usuario</span>
+
+            <!-- Salir: vuelve al home sin sesión -->
+            <a href="home.html" class="btn-salir">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+            </a>
+        </nav>
+
+        <label for="toggle-menu" class="hamburguesa" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+        </label>
+    </div>
+</header>
+
+<!-- Menú hamburguesa móvil -->
+<div class="menu-movil">
+    <button class="btn-nav-text" onclick="window.location.href='biblioteca.html'">📊 Biblioteca</button>
+    <button onclick="window.location.href='carrito.html'">🛒 Carrito</button>
+    <span class="usuario-nombre">👤 Usuario</span>
+    <a href="home.html" class="btn-salir-movil">↪ Salir</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     MAIN
+     ════════════════════════════════════════════════ -->
+<main id="main-content">
+<div class="biblioteca-pagina">
+<div class="contenedor">
+
+    <!-- Cabecera de la sección -->
+    <div class="biblioteca-cabecera">
+        <h1 class="biblioteca-titulo">Mi Biblioteca</h1>
+        <!--
+        El subtítulo lo actualiza JavaScript con el conteo real.
+        El texto por defecto se muestra brevemente mientras carga.
+        -->
+        <p class="biblioteca-subtitulo" id="biblioteca-subtitulo">
+            Cargando tu colección...
+        </p>
+    </div>
+
+    <!--
+    GRID DE JUEGOS
+    Esta zona la construye JavaScript con biblioteca.js.
+    Si la biblioteca está vacía, muestra el estado vacío.
+    Si tiene juegos, construye una tarjeta por cada uno.
+    -->
+    <div class="biblioteca-grid" id="biblioteca-grid">
+        <!-- biblioteca.js llena este div al cargar la página -->
+    </div>
+
+</div>
+</div>
+</main>
+
+
+<!-- ════════════════════════════════════════════════
+     FOOTER — igual al de home-sesion.html
+     ════════════════════════════════════════════════ -->
+<footer>
+    <div class="contenedor">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo-footer">DARKBOX</div>
+                <p class="footer-desc">Tu plataforma de confianza para juegos digitales. Los mejores títulos al mejor precio.</p>
+                <div class="redes">
+                    <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                    <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a>
+                    <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+                    <a href="#" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#101828"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="home-sesion.html">Inicio</a></li>
+                    <li><a href="biblioteca.html">Mi Biblioteca</a></li>
+                    <li><a href="carrito.html">Carrito</a></li>
+                    <li><a href="#">Novedades</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                    <li><a href="#">Política de Reembolso</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <div class="contacto-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span id="footer-email"></span>
+                </div>
+                <div class="contacto-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.1 6.1l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <span>+1 (555) 123-4567</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Darkbox. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════════════
+     SCRIPTS
+     Orden: carrito.js → biblioteca.js → script inline.
+
+     carrito.js se carga primero para poder actualizar
+     el badge del header.
+
+     biblioteca.js se carga segundo para tener el módulo
+     Biblioteca disponible antes del script inline.
+     ════════════════════════════════════════════════ -->
+<!-- ORDEN OBLIGATORIO: supabase.js → carrito.js → biblioteca.js -->
+<script src="supabase.js"></script>
+<script src="carrito.js"></script>
+<script src="biblioteca.js"></script>
+<script>
+
+/* ── EMAIL DEL FOOTER ──────────────────────────────────────────── */
+document.getElementById('footer-email').textContent = 'soporte' + '@' + 'darkbox.com';
+
+    async function cerrarSesion(event) {
+        event.preventDefault();
+        await db.auth.logout();
+        window.location.href = 'home.html';
+    }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   RENDERIZAR LA BIBLIOTECA
+   Ahora es async porque Biblioteca.obtener() lee de Supabase.
+   Supabase guarda la key en "key_activacion" y la fecha en "creado_en".
+   ══════════════════════════════════════════════════════════════════ */
+async function renderizarBiblioteca() {
+    var lista     = await Biblioteca.obtener();
+    var grid      = document.getElementById('biblioteca-grid');
+    var subtitulo = document.getElementById('biblioteca-subtitulo');
+
+    /* ── BIBLIOTECA VACÍA ─────────────────────────────────────── */
+    if (lista.length === 0) {
+        subtitulo.textContent = 'Tu biblioteca está vacía';
+        grid.innerHTML =
+            '<div class="biblioteca-vacia">' +
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+                    '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>' +
+                    '<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>' +
+                '</svg>' +
+                '<p>Aún no tienes juegos en tu biblioteca</p>' +
+                '<small>Compra un juego para verlo aquí</small>' +
+                '<a href="home-sesion.html" class="btn-ir-tienda">Ir a la Tienda</a>' +
+            '</div>';
+        return;
+    }
+
+    /* ── ACTUALIZAR SUBTÍTULO ─────────────────────────────────── */
+    var n = lista.length;
+    subtitulo.textContent = 'Tienes ' + n + ' juego' + (n === 1 ? '' : 's') + ' en tu colección';
+
+    /* ── CONSTRUIR TARJETAS ───────────────────────────────────── */
+    var html = lista.map(function (juego) {
+        /* Supabase usa juego_id (no id) y key_activacion (no key) */
+        var juegoId  = juego.juego_id;
+        var idSeguro = 'juego-' + juegoId;
+
+        /* Formatear la fecha desde el timestamp de Supabase */
+        var fecha = new Date(juego.creado_en);
+        var fechaTexto = fecha.getDate().toString().padStart(2,'0') + '/' +
+                         (fecha.getMonth()+1).toString().padStart(2,'0') + '/' +
+                         fecha.getFullYear();
+
+        return [
+            '<article class="bib-tarjeta">',
+            '  <img src="' + juego.imagen + '"',
+            '       alt="' + juego.nombre + ' — captura del juego"',
+            '       class="bib-imagen">',
+            '  <div class="bib-cuerpo">',
+            '    <h3 class="bib-nombre">' + juego.nombre + '</h3>',
+            '    <div class="bib-meta">',
+            '      <span class="estrella">★</span>',
+            '      <span>' + (juego.genero || '') + '</span>',
+            '      <span class="sep">•</span>',
+            '      <span>' + fechaTexto + '</span>',
+            '    </div>',
+            '    <p class="bib-descripcion">Juego adquirido en DARKBOX. Usa la clave de activación para jugarlo.</p>',
+            '    <div class="bib-key-zona">',
+            '      <div class="bib-key-fila">',
+            '        <span class="bib-key-label">Clave de activación</span>',
+            '        <button class="bib-key-toggle"',
+            '                onclick="mostrarKey(\'' + juegoId + '\')"',
+            '                id="toggle-' + idSeguro + '"',
+            '                aria-label="Mostrar clave de ' + juego.nombre + '">',
+            '          <svg id="icono-' + idSeguro + '" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">',
+            '            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>',
+            '            <circle cx="12" cy="12" r="3"/>',
+            '          </svg>',
+            '        </button>',
+            '      </div>',
+            '      <div class="bib-key-valor" id="key-' + idSeguro + '">' + juego.key_activacion + '</div>',
+            '      <div class="bib-key-acciones">',
+            '        <button class="btn-copiar" id="btn-copiar-' + idSeguro + '"',
+            '                onclick="copiarKey(\'' + juegoId + '\')"',
+            '                aria-label="Copiar clave de ' + juego.nombre + '">',
+            '          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">',
+            '            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>',
+            '            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+            '          </svg>',
+            '          Copiar clave',
+            '        </button>',
+            '      </div>',
+            '    </div>',
+            '  </div>',
+            '</article>'
+        ].join('\n');
+    }).join('\n');
+
+    grid.innerHTML = html;
+}
+
+
+/* ── MOSTRAR / OCULTAR KEY ──────────────────────────────────────── */
+function mostrarKey(id) {
+    var idSeguro  = 'juego-' + id;
+    var keyEl     = document.getElementById('key-' + idSeguro);
+    var iconoEl   = document.getElementById('icono-' + idSeguro);
+    var toggleBtn = document.getElementById('toggle-' + idSeguro);
+    if (!keyEl) return;
+    var visible = keyEl.classList.toggle('visible');
+    toggleBtn.setAttribute('aria-label', visible ? 'Ocultar clave' : 'Mostrar clave');
+    if (visible) {
+        iconoEl.innerHTML =
+            '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>' +
+            '<path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>' +
+            '<line x1="1" y1="1" x2="23" y2="23"/>';
+    } else {
+        iconoEl.innerHTML =
+            '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>' +
+            '<circle cx="12" cy="12" r="3"/>';
+    }
+}
+
+
+/* ── COPIAR KEY AL PORTAPAPELES ─────────────────────────────────── */
+function copiarKey(id) {
+    var idSeguro  = 'juego-' + id;
+    var keyEl     = document.getElementById('key-' + idSeguro);
+    var btnCopiar = document.getElementById('btn-copiar-' + idSeguro);
+    if (!keyEl || !btnCopiar) return;
+    var textoKey = keyEl.textContent.trim();
+    navigator.clipboard.writeText(textoKey)
+        .then(function () {
+            btnCopiar.classList.add('copiado');
+            btnCopiar.innerHTML =
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px">' +
+                    '<polyline points="20 6 9 17 4 12"/>' +
+                '</svg>¡Copiado!';
+            setTimeout(function () {
+                btnCopiar.classList.remove('copiado');
+                btnCopiar.innerHTML =
+                    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px">' +
+                        '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>' +
+                        '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>' +
+                    '</svg>Copiar clave';
+            }, 2000);
+        })
+        .catch(function () {
+            alert('Clave: ' + textoKey + '\n\nCópiala manualmente.');
+        });
+}
+
+
+/* ── INICIALIZAR ────────────────────────────────────────────────── */
+document.addEventListener('db-listo', async function () {
+    renderizarBiblioteca();
+    /* Mostrar nombre del usuario */
+    var usuario = await db.auth.obtenerUsuario();
+    if (usuario) {
+        var nombre = (usuario.user_metadata && usuario.user_metadata.nombre)
+            ? usuario.user_metadata.nombre
+            : usuario.email.split('@')[0];
+        var spans = document.querySelectorAll('.usuario-nombre');
+        spans.forEach(function(el) { el.textContent = '👤 ' + nombre; });
+    }
+});
+
+</script>
+
+<script src="buscador.js"></script>
+<script src="cookies.js"></script>
+</body>
+</html>

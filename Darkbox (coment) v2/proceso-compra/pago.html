@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>DARKBOX — Finalizar Compra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+    <!-- Rutas con ../ porque este archivo está en la subcarpeta proceso-compra/ -->
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../carrito.css">
+    <link rel="stylesheet" href="pago.css">
+    <link rel="stylesheet" href="../cookies.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     INTERRUPTORES INVISIBLES
+     ════════════════════════════════════════════════ -->
+
+<!-- Checkbox del menú hamburguesa -->
+<input type="checkbox" id="toggle-menu">
+
+<!-- Radio para elegir el método de pago.
+     "metodo" es el name que agrupa los dos radios.
+     "tarjeta" está checked por defecto (se selecciona al cargar).
+     Al hacer clic en "paypal", se marca ese radio y el CSS
+     oculta el formulario de tarjeta y muestra el de PayPal. -->
+<input type="radio" name="metodo" id="metodo-tarjeta" checked>
+<input type="radio" name="metodo" id="metodo-paypal">
+
+
+<!-- ════════════════════════════════════════════════
+     HEADER — versión CON sesión
+     ════════════════════════════════════════════════ -->
+<header>
+    <div class="contenedor">
+
+        <!-- Logo apunta al home con sesión -->
+        <a href="../home-sesion.html" class="logo">DARKBOX</a>
+
+        <div class="buscador">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" placeholder="Buscar juegos...">
+        </div>
+
+        <nav>
+            <a href="../biblioteca.html" class="btn-nav-text">📊 Biblioteca</a>
+
+            <!-- Botón carrito con badge -->
+            <button class="btn-carrito-header" onclick="window.location.href='../carrito.html'">
+                🛒 Carrito
+                <span id="carrito-badge" class="carrito-badge" style="display:none;">0</span>
+            </button>
+
+            <span class="usuario-nombre">👤 Usuario</span>
+
+            <a href="#" onclick="cerrarSesion(event)" class="btn-salir">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+            </a>
+        </nav>
+
+        <label for="toggle-menu" class="hamburguesa">
+            <span></span><span></span><span></span>
+        </label>
+    </div>
+</header>
+
+<!-- Menú hamburguesa móvil -->
+<div class="menu-movil">
+    <a href="../biblioteca.html" class="btn-nav-text">📊 Biblioteca</a>
+    <button onclick="window.location.href='../carrito.html'">🛒 Carrito</button>
+    <span class="usuario-nombre">👤 Usuario</span>
+    <a href="#" onclick="cerrarSesion(event)" class="btn-salir-movil">↪ Salir</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     MAIN
+     ════════════════════════════════════════════════ -->
+<main>
+<div class="pago-pagina">
+<div class="contenedor">
+
+    <h1 class="pago-titulo">Finalizar Compra</h1>
+
+    <!-- Layout: formulario izquierda + resumen derecha -->
+    <div class="pago-layout">
+
+        <!-- ── COLUMNA IZQUIERDA: método de pago + formulario ── -->
+        <div class="pago-izquierda">
+
+
+            <!-- ════════════════════════════════════════════
+                 SECCIÓN: MÉTODO DE PAGO
+                 Dos opciones: Tarjeta y PayPal.
+                 Cada opción es un label que activa su radio.
+                 El CSS resalta la opción seleccionada con
+                 un borde morado.
+                 ════════════════════════════════════════════ -->
+            <div class="pago-seccion">
+                <h2 class="pago-seccion-titulo">Método de Pago</h2>
+
+                <div class="metodos-lista">
+
+                    <!-- Opción Tarjeta de Crédito/Débito -->
+                    <!-- El label envuelve el contenido visual y está vinculado
+                         al radio "metodo-tarjeta" mediante el atributo for -->
+                    <label for="metodo-tarjeta" class="metodo-opcion metodo-tarjeta-label">
+                        <!-- Radio visual: el punto se pone morado cuando está activo -->
+                        <span class="metodo-radio"></span>
+                        <!-- Ícono tarjeta en SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                            <line x1="1" y1="10" x2="23" y2="10"/>
+                        </svg>
+                        Tarjeta de Crédito/Débito
+                    </label>
+
+                    <!-- Opción PayPal -->
+                    <label for="metodo-paypal" class="metodo-opcion metodo-paypal-label">
+                        <span class="metodo-radio"></span>
+                        <!-- Ícono móvil/PayPal en SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                            <line x1="12" y1="18" x2="12.01" y2="18"/>
+                        </svg>
+                        PayPal
+                    </label>
+
+                </div>
+            </div>
+
+
+            <!-- ════════════════════════════════════════════
+                 FORMULARIO DE TARJETA
+                 Visible por defecto (cuando metodo-tarjeta está activo).
+                 El CSS lo oculta cuando metodo-paypal está marcado.
+
+                 Validaciones HTML nativas (sin JavaScript):
+                 - minlength / maxlength: límite de caracteres
+                 - pattern: solo permite ciertos caracteres
+                 - required: campo obligatorio
+                 - inputmode: tipo de teclado en móvil
+
+                 IMPORTANTE: estas validaciones son de formato,
+                 NO verifican si la tarjeta es real.
+                 ════════════════════════════════════════════ -->
+            <div class="pago-seccion form-tarjeta">
+                <h2 class="pago-seccion-titulo">Información de Tarjeta</h2>
+
+                <!-- Número de tarjeta: 16 dígitos con espacios cada 4 -->
+                <div class="campo-grupo">
+                    <label class="campo-label" for="num-tarjeta">Número de Tarjeta</label>
+                    <input
+                        type="text"
+                        id="num-tarjeta"
+                        class="campo-input"
+                        placeholder="1234 5678 9012 3456"
+                        maxlength="19"
+                        inputmode="numeric"
+                        autocomplete="cc-number"
+                    >
+                    <!-- maxlength="19" = 16 dígitos + 3 espacios -->
+                    <!-- inputmode="numeric" muestra teclado numérico en móvil -->
+                </div>
+
+                <!-- Fila con dos campos: fecha y CVV -->
+                <div class="campo-fila">
+
+                    <!-- Fecha de expiración: formato MM/AA -->
+                    <div class="campo-grupo">
+                        <label class="campo-label" for="fecha-exp">Fecha de Expiración</label>
+                        <input
+                            type="text"
+                            id="fecha-exp"
+                            class="campo-input"
+                            placeholder="MM/AA"
+                            maxlength="5"
+                            inputmode="numeric"
+                            autocomplete="cc-exp"
+                        >
+                        <!-- maxlength="5" = 2 dígitos mes + / + 2 dígitos año -->
+                    </div>
+
+                    <!-- CVV: 3 dígitos (Visa/Mastercard) o 4 (Amex) -->
+                    <div class="campo-grupo">
+                        <label class="campo-label" for="cvv">CVV</label>
+                        <input
+                            type="text"
+                            id="cvv"
+                            class="campo-input"
+                            placeholder="123"
+                            minlength="3"
+                            maxlength="4"
+                            inputmode="numeric"
+                            autocomplete="cc-csc"
+                        >
+                        <!-- minlength="3" maxlength="4" cubre Visa(3) y Amex(4) -->
+                    </div>
+
+                </div>
+
+                <!-- Nombre del titular: solo letras y espacios -->
+                <div class="campo-grupo">
+                    <label class="campo-label" for="nombre-titular">Nombre del Titular</label>
+                    <input
+                        type="text"
+                        id="nombre-titular"
+                        class="campo-input"
+                        placeholder="Nombre completo"
+                        maxlength="60"
+                        autocomplete="cc-name"
+                    >
+                </div>
+
+            </div>
+
+
+            <!-- ════════════════════════════════════════════
+                 FORMULARIO DE PAYPAL
+                 Oculto por defecto. El CSS lo muestra cuando
+                 metodo-paypal está marcado.
+                 Solo pide el email asociado a la cuenta PayPal.
+                 ════════════════════════════════════════════ -->
+            <div class="pago-seccion form-paypal">
+                <h2 class="pago-seccion-titulo">PayPal</h2>
+
+                <p class="paypal-desc">
+                    Serás redirigido a PayPal para completar el pago de forma segura.
+                    Ingresa el correo de tu cuenta PayPal para continuar.
+                </p>
+
+                <div class="campo-grupo">
+                    <label class="campo-label" for="email-paypal">Correo de PayPal</label>
+                    <input
+                        type="email"
+                        id="email-paypal"
+                        class="campo-input"
+                        placeholder="tu@correo.com"
+                        autocomplete="email"
+                    >
+                    <!-- type="email" valida automáticamente el formato de correo -->
+                </div>
+
+            </div>
+
+
+            <!-- Botón de pago: el texto cambia según el método activo.
+                 El span .btn-pago-texto-tarjeta se muestra con tarjeta,
+                 y .btn-pago-texto-paypal se muestra con PayPal.
+                 onclick llama a procesarPago() que valida y redirige. -->
+            <div id="pago-error-msg" style="display:none;color:#f87171;font-family:Inter,sans-serif;font-size:0.9rem;font-weight:600;padding:12px 16px;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:8px;margin-bottom:16px;"></div>
+            <button class="btn-pagar" onclick="procesarPago()">
+                <span class="btn-texto-tarjeta">Pagar <span id="btn-total">$0</span></span>
+                <span class="btn-texto-paypal">Continuar con PayPal</span>
+            </button>
+
+
+        </div><!-- fin pago-izquierda -->
+
+
+        <!-- ── COLUMNA DERECHA: resumen del pedido ── -->
+        <div class="pago-resumen">
+
+            <h2 class="resumen-titulo">Resumen del Pedido</h2>
+
+            <!-- Lista de juegos: carrito.js la llena al cargar la página -->
+            <div id="resumen-juegos"></div>
+
+            <div class="resumen-separador"></div>
+
+            <!-- Subtotal -->
+            <div class="resumen-fila">
+                <span>Subtotal</span>
+                <span id="resumen-subtotal">$0</span>
+            </div>
+
+            <!-- Impuestos: siempre $0.00 (simulación) -->
+            <div class="resumen-fila">
+                <span>Impuestos</span>
+                <span>$0.00</span>
+            </div>
+
+            <div class="resumen-separador"></div>
+
+            <!-- Total en grande -->
+            <div class="resumen-fila resumen-total">
+                <span>Total</span>
+                <span id="resumen-total">$0</span>
+            </div>
+
+            <!-- Sello de seguridad -->
+            <div class="seguridad-badge">
+                🔒 Pago 100% seguro y encriptado
+            </div>
+
+        </div><!-- fin pago-resumen -->
+
+    </div><!-- fin pago-layout -->
+
+</div>
+</div>
+</main>
+
+
+<!-- Footer -->
+<footer>
+    <div class="contenedor">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo-footer">DARKBOX</div>
+                <p class="footer-desc">Tu plataforma de confianza para juegos digitales. Los mejores títulos al mejor precio.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="../home-sesion.html">Inicio</a></li>
+                    <li><a href="../carrito.html">Carrito</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <div class="contacto-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span id="footer-email"></span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Darkbox. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════════════
+     SCRIPTS
+     carrito.js primero (define el objeto Carrito),
+     luego el script de esta página que lo usa.
+     ════════════════════════════════════════════════ -->
+<!-- ORDEN OBLIGATORIO: supabase.js → carrito.js → biblioteca.js -->
+<script src="../supabase.js"></script>
+<script src="../carrito.js"></script>
+<script src="../biblioteca.js"></script>
+<script>
+
+/* ── EMAIL DEL FOOTER ── */
+document.getElementById('footer-email').textContent = 'soporte' + '@' + 'darkbox.com';
+
+
+/* ══════════════════════════════════════════════════════════════
+   LLENAR EL RESUMEN DEL PEDIDO
+   Lee los juegos del carrito desde Supabase y construye
+   la lista visual de la columna derecha.
+   ══════════════════════════════════════════════════════════════ */
+async function llenarResumen() {
+    var lista    = await Carrito.obtener();
+    var zona     = document.getElementById('resumen-juegos');
+    var total    = await Carrito.total();
+    var btnTotal = document.getElementById('btn-total');
+
+    /* Construimos una fila por cada juego en el carrito */
+    var html = lista.map(function(juego) {
+        return [
+            '<div class="resumen-juego">',
+            '  <img src="' + juego.imagen + '" alt="' + juego.nombre + '" class="resumen-juego-img">',
+            '  <div class="resumen-juego-info">',
+            '    <p class="resumen-juego-nombre">' + juego.nombre + '</p>',
+            '    <p class="resumen-juego-precio">' + Carrito.formatearPrecio(juego.precio) + '</p>',
+            '  </div>',
+            '</div>'
+        ].join('\n');
+    }).join('\n');
+
+    zona.innerHTML = html || '<p style="color:#8888aa;font-size:0.9rem;">El carrito está vacío.</p>';
+
+    var totalFormateado = Carrito.formatearPrecio(total);
+    document.getElementById('resumen-subtotal').textContent = totalFormateado;
+    document.getElementById('resumen-total').textContent    = totalFormateado;
+    if (btnTotal) btnTotal.textContent = totalFormateado;
+}
+
+/* Esperar a que Supabase esté listo antes de cargar el resumen */
+document.addEventListener('db-listo', function() {
+    llenarResumen();
+});
+
+
+/* ══════════════════════════════════════════════════════════════
+   FORMATEAR NÚMERO DE TARJETA
+   Mientras el usuario escribe, agrega automáticamente espacios
+   cada 4 dígitos. Ej: "1234567890123456" → "1234 5678 9012 3456"
+   El evento "input" se dispara cada vez que cambia el contenido.
+   ══════════════════════════════════════════════════════════════ */
+var inputTarjeta = document.getElementById('num-tarjeta');
+if (inputTarjeta) {
+    inputTarjeta.addEventListener('input', function() {
+        /* Quitamos todo lo que no sea dígito */
+        var valor = this.value.replace(/\D/g, '');
+
+        /* Agrupamos en bloques de 4 con espacios */
+        var formateado = valor.match(/.{1,4}/g);
+
+        /* .join(' ') une los bloques con espacios */
+        this.value = formateado ? formateado.join(' ') : '';
+    });
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   FORMATEAR FECHA DE EXPIRACIÓN
+   Agrega automáticamente la / después del mes.
+   Ej: el usuario escribe "1224" → se muestra "12/24"
+   ══════════════════════════════════════════════════════════════ */
+var inputFecha = document.getElementById('fecha-exp');
+if (inputFecha) {
+    inputFecha.addEventListener('input', function() {
+        /* Solo dígitos */
+        var valor = this.value.replace(/\D/g, '');
+
+        /* Si hay más de 2 dígitos, insertamos la / en posición 2 */
+        if (valor.length >= 2) {
+            this.value = valor.slice(0, 2) + '/' + valor.slice(2, 4);
+        } else {
+            this.value = valor;
+        }
+    });
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   SOLO DÍGITOS EN CVV
+   Evita que el usuario escriba letras en el campo CVV.
+   ══════════════════════════════════════════════════════════════ */
+var inputCvv = document.getElementById('cvv');
+if (inputCvv) {
+    inputCvv.addEventListener('input', function() {
+        /* Reemplazamos todo lo que no sea dígito con nada */
+        this.value = this.value.replace(/\D/g, '');
+    });
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   PROCESAR PAGO
+   Se llama al hacer clic en el botón de pagar.
+   Valida los campos, luego llama db.completarCompra() que
+   ejecuta la función SQL en Supabase: mueve los juegos del
+   carrito a la biblioteca y genera una key por cada uno.
+   ══════════════════════════════════════════════════════════════ */
+async function procesarPago() {
+
+    var esTarjeta = document.getElementById('metodo-tarjeta').checked;
+    var metodo    = esTarjeta ? 'tarjeta' : 'paypal';
+
+    /* ── VALIDACIONES ──────────────────────────────────────── */
+    if (esTarjeta) {
+        var numero  = document.getElementById('num-tarjeta').value.replace(/ /g, '');
+        var fecha   = document.getElementById('fecha-exp').value;
+        var cvv     = document.getElementById('cvv').value;
+        var titular = document.getElementById('nombre-titular').value.trim();
+
+        if (numero.length < 16) {
+            alert('Por favor ingresa un número de tarjeta válido (16 dígitos).');
+            return;
+        }
+        if (fecha.length < 5) {
+            alert('Por favor ingresa la fecha de expiración (MM/AA).');
+            return;
+        }
+        if (cvv.length < 3) {
+            alert('Por favor ingresa el código CVV (3 o 4 dígitos).');
+            return;
+        }
+        if (titular.length < 3) {
+            alert('Por favor ingresa el nombre del titular.');
+            return;
+        }
+    } else {
+        var emailPaypal = document.getElementById('email-paypal').value.trim();
+        if (!emailPaypal.includes('@') || emailPaypal.length < 6) {
+            alert('Por favor ingresa un correo de PayPal válido.');
+            return;
+        }
+    }
+
+    /* ── PAGO APROBADO — LLAMAR A SUPABASE ─────────────────────
+       La función SQL completar_compra() en Supabase hace todo:
+       1. Genera una key de activación para cada juego del carrito
+       2. Inserta los juegos en la tabla biblioteca
+       3. Vacía la tabla carrito del usuario
+
+       IMPORTANTE: deshabilitar el botón mientras procesa para
+       evitar que el usuario haga clic dos veces. */
+    var btnPagar = document.querySelector('.btn-pagar');
+    if (btnPagar) {
+        btnPagar.disabled = true;
+        btnPagar.textContent = 'Procesando...';
+    }
+
+    var resultado = await db.completarCompra(metodo);
+
+    if (resultado.ok) {
+        /* Compra exitosa: redirigir */
+        window.location.href = 'compra-exitosa.html';
+    } else {
+        /* Error al procesar */
+        var errZona = document.getElementById('pago-error-msg');
+            if (errZona) {
+                errZona.style.display = 'block';
+                errZona.textContent = 'Hubo un error al procesar tu pago: ' + (resultado.error || 'Intenta de nuevo.');
+            }
+        if (btnPagar) {
+            btnPagar.disabled = false;
+            btnPagar.textContent = esTarjeta ? 'Pagar con Tarjeta' : 'Pagar con PayPal';
+        }
+    }
+}
+
+    /* Cerrar sesión */
+    async function cerrarSesion(event) {
+        event.preventDefault();
+        await db.auth.logout();
+        window.location.href = '../home.html';
+    }
+
+    /* Mostrar nombre del usuario */
+    document.addEventListener('db-listo', async function() {
+        var usuario = await db.auth.obtenerUsuario();
+        if (usuario) {
+            var nombre = usuario.nombre ? usuario.nombre
+                : usuario.email.split('@')[0];
+            document.querySelectorAll('.usuario-nombre').forEach(function(el) {
+                el.textContent = '👤 ' + nombre;
+            });
+        }
+    });
+
+</script>
+
+<script src="../cookies.js"></script>
+</body>
+</html>
